@@ -1,7 +1,15 @@
-<!DOCTYPE html><html class="theme-next pisces use-motion" lang="zh-Hans"><head>
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
 <link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
@@ -26,8 +34,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -46,7 +54,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -54,9 +62,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -74,31 +82,31 @@
 
 
 
-  <meta name="keywords" content="spring,ioc,">
+  <meta name="keywords" content="spring,ioc," />
 
 
 
 
 
-  <link rel="alternate" href="/atom.xml" title="lyz&#x7684;&#x535A;&#x5BA2;" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="lyz的博客" type="application/atom+xml" />
 
 
 
 
 
 
-<meta name="description" content="Spring&amp;#x6E90;&amp;#x7801;&amp;#x5B66;&amp;#x4E60;&amp;#xFF08;&amp;#x4E00;&amp;#xFF09; DefaultListableBeanFactory DefaultListableBeanFactory&amp;#x662F;spring&amp;#x6574;&amp;#x4E2A;bean&amp;#x52A0;&amp;#x8F7D;&amp;#x7684;&amp;#x6838;&amp;#x5FC3;&amp;#x90E8;&amp;#">
+<meta name="description" content="Spring源码学习（一） DefaultListableBeanFactory DefaultListableBeanFactory是spring整个bean加载的核心部分，是spring注册及加载bean的默认实现。XmlBeanFactory继承了自DefaultListableBeanFactory，不同的就是XmlBeanFactory中使用了自定义的XmlBeanDefinitionR">
 <meta name="keywords" content="spring,ioc">
 <meta property="og:type" content="article">
-<meta property="og:title" content="IOC&#xFF08;&#x4E00;&#xFF09;">
-<meta property="og:url" content="http://luyaoze.github.io/2018/03/25/IOC&#xFF08;&#x4E00;&#xFF09;/index.html">
-<meta property="og:site_name" content="lyz&#x7684;&#x535A;&#x5BA2;">
-<meta property="og:description" content="Spring&amp;#x6E90;&amp;#x7801;&amp;#x5B66;&amp;#x4E60;&amp;#xFF08;&amp;#x4E00;&amp;#xFF09; DefaultListableBeanFactory DefaultListableBeanFactory&amp;#x662F;spring&amp;#x6574;&amp;#x4E2A;bean&amp;#x52A0;&amp;#x8F7D;&amp;#x7684;&amp;#x6838;&amp;#x5FC3;&amp;#x90E8;&amp;#">
+<meta property="og:title" content="IOC（一）">
+<meta property="og:url" content="http://luyaoze.github.io/2018/03/25/IOC（一）/index.html">
+<meta property="og:site_name" content="lyz的博客">
+<meta property="og:description" content="Spring源码学习（一） DefaultListableBeanFactory DefaultListableBeanFactory是spring整个bean加载的核心部分，是spring注册及加载bean的默认实现。XmlBeanFactory继承了自DefaultListableBeanFactory，不同的就是XmlBeanFactory中使用了自定义的XmlBeanDefinitionR">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-03-28T18:05:53.896Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="IOC&#xFF08;&#x4E00;&#xFF09;">
-<meta name="twitter:description" content="Spring&amp;#x6E90;&amp;#x7801;&amp;#x5B66;&amp;#x4E60;&amp;#xFF08;&amp;#x4E00;&amp;#xFF09; DefaultListableBeanFactory DefaultListableBeanFactory&amp;#x662F;spring&amp;#x6574;&amp;#x4E2A;bean&amp;#x52A0;&amp;#x8F7D;&amp;#x7684;&amp;#x6838;&amp;#x5FC3;&amp;#x90E8;&amp;#">
+<meta name="twitter:title" content="IOC（一）">
+<meta name="twitter:description" content="Spring源码学习（一） DefaultListableBeanFactory DefaultListableBeanFactory是spring整个bean加载的核心部分，是spring注册及加载bean的默认实现。XmlBeanFactory继承了自DefaultListableBeanFactory，不同的就是XmlBeanFactory中使用了自定义的XmlBeanDefinitionR">
 
 
 
@@ -128,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://luyaoze.github.io/2018/03/25/IOC&#xFF08;&#x4E00;&#xFF09;/">
+  <link rel="canonical" href="http://luyaoze.github.io/2018/03/25/IOC（一）/"/>
 
 
 
 
 
-  <title>IOC&#xFF08;&#x4E00;&#xFF09; | lyz&#x7684;&#x535A;&#x5BA2;</title>
+  <title>IOC（一） | lyz的博客</title>
   
 
 
@@ -146,7 +154,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -156,20 +164,20 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
+      <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">lyz&#x7684;&#x535A;&#x5BA2;</span>
+        <span class="site-title">lyz的博客</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
       
-        <p class="site-subtitle">&#x9759;&#x9759;&#x5730;&#x642C;&#x7816;</p>
+        <p class="site-subtitle">静静地搬砖</p>
       
   </div>
 
@@ -192,9 +200,9 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
-            &#x9996;&#x9875;
+            首页
           </a>
         </li>
       
@@ -202,9 +210,9 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
-            &#x6807;&#x7B7E;
+            标签
           </a>
         </li>
       
@@ -212,9 +220,9 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            &#x5206;&#x7C7B;
+            分类
           </a>
         </li>
       
@@ -222,9 +230,9 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
-            &#x5F52;&#x6863;
+            归档
           </a>
         </li>
       
@@ -256,21 +264,21 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://luyaoze.github.io/2018/03/25/IOC&#xFF08;&#x4E00;&#xFF09;/">
+    <link itemprop="mainEntityOfPage" href="http://luyaoze.github.io/2018/03/25/IOC（一）/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="&#x5362;&#x8000;&#x6CFD;">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="卢耀泽">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="lyz&#x7684;&#x535A;&#x5BA2;">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lyz的博客">
     </span>
 
     
@@ -278,7 +286,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">IOC&#xFF08;&#x4E00;&#xFF09;</h1>
+          <h1 class="post-title" itemprop="name headline">IOC（一）</h1>
         
 
         <div class="post-meta">
@@ -288,9 +296,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">&#x53D1;&#x8868;&#x4E8E;</span>
+                <span class="post-meta-item-text">发表于</span>
               
-              <time title="&#x521B;&#x5EFA;&#x4E8E;" itemprop="dateCreated datePublished" datetime="2018-03-25T22:07:01+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-25T22:07:01+08:00">
                 2018-03-25
               </time>
             
@@ -301,7 +309,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -309,10 +317,10 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">&#x5206;&#x7C7B;&#x4E8E;</span>
+                <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/java/" itemprop="url" rel="index">
                     <span itemprop="name">java</span>
                   </a>
@@ -350,33 +358,33 @@
       
 
       
-        <p>Spring&#x6E90;&#x7801;&#x5B66;&#x4E60;&#xFF08;&#x4E00;&#xFF09;</p>
+        <p>Spring源码学习（一）</p>
 <h2 id="DefaultListableBeanFactory"><a href="#DefaultListableBeanFactory" class="headerlink" title="DefaultListableBeanFactory"></a>DefaultListableBeanFactory</h2><ul>
-<li><strong>DefaultListableBeanFactory</strong>&#x662F;spring&#x6574;&#x4E2A;bean&#x52A0;&#x8F7D;&#x7684;&#x6838;&#x5FC3;&#x90E8;&#x5206;&#xFF0C;&#x662F;spring&#x6CE8;&#x518C;&#x53CA;&#x52A0;&#x8F7D;bean&#x7684;&#x9ED8;&#x8BA4;&#x5B9E;&#x73B0;&#x3002;XmlBeanFactory&#x7EE7;&#x627F;&#x4E86;&#x81EA;DefaultListableBeanFactory&#xFF0C;&#x4E0D;&#x540C;&#x7684;&#x5C31;&#x662F;XmlBeanFactory&#x4E2D;&#x4F7F;&#x7528;&#x4E86;&#x81EA;&#x5B9A;&#x4E49;&#x7684;XmlBeanDefinitionReader&#xFF0C;&#x5B9E;&#x73B0;&#x4E86;&#x81EA;&#x5B9A;&#x4E49;&#x7684;BeanDefinitionReader&#x8BFB;&#x53D6;&#x3002;</li>
-<li><p><strong>AliasRegistry</strong> - &#x5B9A;&#x4E49;&#x5BF9;alias&#x7684;&#x7B80;&#x5355;&#x7684;&#x589E;&#x5220;&#x6539;&#x64CD;&#x4F5C;&#x3002;spring-core&#x6A21;&#x5757;&#x4E0B;&#x7684;&#x63A5;&#x53E3;.</p>
-<figure class="highlight delphi"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void registerAlias(<span class="keyword">String</span> <span class="keyword">name</span>, <span class="keyword">String</span> <span class="keyword">alias</span>);</span><br><span class="line">void removeAlias(<span class="keyword">String</span> <span class="keyword">alias</span>);</span><br><span class="line">boolean isAlias(<span class="keyword">String</span> <span class="keyword">name</span>);</span><br><span class="line"><span class="keyword">String</span>[] getAliases(<span class="keyword">String</span> <span class="keyword">name</span>);</span><br></pre></td></tr></tbody></table></figure>
+<li><strong>DefaultListableBeanFactory</strong>是spring整个bean加载的核心部分，是spring注册及加载bean的默认实现。XmlBeanFactory继承了自DefaultListableBeanFactory，不同的就是XmlBeanFactory中使用了自定义的XmlBeanDefinitionReader，实现了自定义的BeanDefinitionReader读取。</li>
+<li><p><strong>AliasRegistry</strong> - 定义对alias的简单的增删改操作。spring-core模块下的接口.</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void registerAlias(<span class="keyword">String</span> <span class="keyword">name</span>, <span class="keyword">String</span> <span class="keyword">alias</span>);</span><br><span class="line">void removeAlias(<span class="keyword">String</span> <span class="keyword">alias</span>);</span><br><span class="line">boolean isAlias(<span class="keyword">String</span> <span class="keyword">name</span>);</span><br><span class="line"><span class="keyword">String</span>[] getAliases(<span class="keyword">String</span> <span class="keyword">name</span>);</span><br></pre></td></tr></table></figure>
 </li>
-<li><p><strong>SimpleAliasRegistry</strong> - &#x4F7F;&#x7528;map&#x4F5C;&#x4E3A;&#x7F13;&#x5B58;&#xFF0C;&#x5BF9;AliasRegistry&#x63A5;&#x53E3;&#x8FDB;&#x884C;&#x5B9E;&#x73B0;&#x3002;</p>
-<figure class="highlight dart"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private <span class="keyword">final</span> <span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">String</span>&gt; aliasMap = <span class="keyword">new</span> ConcurrentHashMap(<span class="number">16</span>);</span><br></pre></td></tr></tbody></table></figure>
+<li><p><strong>SimpleAliasRegistry</strong> - 使用map作为缓存，对AliasRegistry接口进行实现。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private <span class="keyword">final</span> <span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">String</span>&gt; aliasMap = <span class="keyword">new</span> ConcurrentHashMap(<span class="number">16</span>);</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <ul>
-<li><strong>SingLetonBeanRegistry</strong> - &#x5B9A;&#x4E49;&#x5BF9;&#x5355;&#x4F8B;&#x7684;&#x6CE8;&#x518C;&#x53CA;&#x83B7;&#x53D6;</li>
-<li><strong>BeanFactory</strong> -&#x5B9A;&#x4E49;&#x83B7;&#x53D6;bean&#x53CA;bean&#x7684;&#x5404;&#x79CD;&#x5C5E;&#x6027;</li>
-<li><strong>DefaultSingletonBeanRegistry</strong> -&#x7EE7;&#x627F;SimpleAliasRegistry &#x5B9E;&#x73B0;SingletonBeanRegistry&#x63A5;&#x53E3;&#x3002;</li>
-<li><strong>HierarchicalBeanFactory</strong> -&#x7EE7;&#x627F;&#x81EA;BeanFactory&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x5728;BeanFactory&#x7684;&#x57FA;&#x7840;&#x4E0A;&#x589E;&#x52A0;&#x4E86;&#x5BF9;parentFactory&#x7684;&#x652F;&#x6301;&#x3002;</li>
-<li><strong>BeanDefinitionRegistry</strong> -&#x7EE7;&#x627F;&#x81EA;AliasRegistry&#xFF0C;&#x5B9A;&#x4E49;&#x5BF9;BeanDefinition&#x7684;&#x5404;&#x79CD;&#x589E;&#x5220;&#x6539;&#x64CD;&#x4F5C;&#xFF0C;&#x9ED8;&#x8BA4;&#x7684;&#x5B9E;&#x73B0;&#x4E3A;DefaultListableBeanFactory&#x3002;</li>
-<li><strong>FactoryBeanRegistrySupport</strong> -&#x7EE7;&#x627F;&#x81EA;DefaultSingletonBeanRegistry&#xFF0C;&#x5728;&#x539F;&#x6709;&#x7684;&#x57FA;&#x7840;&#x4E0A;&#x589E;&#x52A0;&#x4E86;&#x5BF9;FactoryBean&#x7684;&#x7279;&#x6B8A;&#x5904;&#x7406;&#x529F;&#x80FD;&#x3002;</li>
-<li><strong>ConfigurableBeanFactory</strong> -&#x7EE7;&#x627F;&#x4E86;HierarchicalBeanFactory&#x548C;SingletonBeanRegistry&#x4E24;&#x4E2A;&#x63A5;&#x53E3;&#xFF0C;&#x63D0;&#x4F9B;&#x914D;&#x7F6E;Factory&#x7684;&#x5404;&#x79CD;&#x65B9;&#x6CD5;&#x3002;</li>
-<li><strong>ListableBeanFactory</strong> -&#x7EE7;&#x627F;&#x4E86;BeanFactory&#xFF0C;&#x63D0;&#x4F9B;&#x5404;&#x79CD;&#x6761;&#x4EF6;&#x83B7;&#x53D6;bean&#x7684;&#x914D;&#x7F6E;&#x6E05;&#x5355;&#x3002;</li>
-<li><strong>AbstractBeanFactory</strong> -&#x62BD;&#x8C61;&#x7C7B;&#xFF0C;&#x7EE7;&#x627F;&#x4E86;FactoryBeanRegistrySupport&#xFF0C;&#x5B9E;&#x73B0;&#x4E86;ConfigurableBeanFactory&#x63A5;&#x53E3;&#xFF0C;&#x5BF9;&#x4E24;&#x8005;&#x7684;&#x529F;&#x80FD;&#x8FDB;&#x884C;&#x6574;&#x5408;&#x3002;</li>
-<li><strong>AutowireCapableBeanFactory</strong> -&#x7EE7;&#x627F;&#x81EA;BeanFactory&#xFF0C;&#x63D0;&#x4F9B;&#x521B;&#x5EFA;bean&#x3001;&#x81EA;&#x52A8;&#x6CE8;&#x5165;&#x3001;&#x521D;&#x59CB;&#x5316;&#x4EE5;&#x53CA;&#x5E94;&#x7528;bean&#x7684;&#x540E;&#x5904;&#x7406;&#x5668;&#x3002;</li>
-<li><strong>AutowireCapableBeanFactory</strong> -&#x7EE7;&#x627F;&#x4E86;AbstractBeanFactory&#xFF0C;&#x5B9E;&#x73B0;&#x4E86;AutowireCapableBeanFactory&#x63A5;&#x53E3;&#x3002;</li>
-<li><strong>ConfigurableListableBeanFactory</strong> -&#x7EE7;&#x627F;&#x4E86;ListableBeanFactory&#xFF0C;AutowireCapableBeanFactory&#xFF0C;ConfigurableBeanFactory&#x4E09;&#x4E2A;&#x63A5;&#x53E3;&#xFF0C;beanFactory&#x7684;&#x914D;&#x7F6E;&#x6E05;&#x5355;&#xFF0C;&#x5236;&#x5B9A;&#x5FFD;&#x7565;&#x7C7B;&#x578B;&#x53CA;&#x63A5;&#x53E3;&#x7B49;&#x3002;</li>
-<li><strong>DefaultListableBeanFactory</strong> -&#x7EFC;&#x5408;&#x4E0A;&#x9762;&#x6240;&#x6709;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x4E3B;&#x8981;&#x662F;&#x5BF9;bean&#x6CE8;&#x518C;&#x540E;&#x7684;&#x5904;&#x7406;&#x3002;</li>
-<li><strong>XmlBeanFactory</strong> &#x5BF9;DefaultListableBeanFactory&#x7C7B;&#x8FDB;&#x884C;&#x4E86;&#x62D3;&#x5C55;&#xFF0C;&#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x4ECE;XML&#x6587;&#x6863;&#x4E2D;&#x8BFB;&#x53D6;BeanDefinition&#xFF0C;&#x5BF9;&#x4E8E;&#x6CE8;&#x518C;Bean&#x90FD;&#x662F;&#x4ECE;&#x7236;&#x7C7B;DefaultListableBeanFactory&#x7EE7;&#x627F;&#x7684;&#x65B9;&#x6CD5;&#x53BB;&#x5B9E;&#x73B0;&#xFF0C;&#x800C;&#x552F;&#x72EC;&#x4E0E;&#x7236;&#x7C7B;&#x4E0D;&#x540C;&#x7684;&#x7684;&#x4E2A;&#x6027;&#x5316;&#x5B9E;&#x73B0;&#x5C31;&#x662F;&#x589E;&#x52A0;&#x4E86;XmlBeanDefinitionReader&#x7C7B;&#x578B;&#x7684;reader&#x5C5E;&#x6027;&#x3002;&#x5728;XmlBeanFactory&#x4E2D;&#x4E3B;&#x8981;&#x4F7F;&#x7528;reader&#x5C5E;&#x6027;&#x5BF9;&#x8D44;&#x6E90;&#x8FDB;&#x884C;&#x8BFB;&#x53D6;&#x548C;&#x6CE8;&#x518C;&#x3002;</li>
+<li><strong>SingLetonBeanRegistry</strong> - 定义对单例的注册及获取</li>
+<li><strong>BeanFactory</strong> -定义获取bean及bean的各种属性</li>
+<li><strong>DefaultSingletonBeanRegistry</strong> -继承SimpleAliasRegistry 实现SingletonBeanRegistry接口。</li>
+<li><strong>HierarchicalBeanFactory</strong> -继承自BeanFactory，也就是在BeanFactory的基础上增加了对parentFactory的支持。</li>
+<li><strong>BeanDefinitionRegistry</strong> -继承自AliasRegistry，定义对BeanDefinition的各种增删改操作，默认的实现为DefaultListableBeanFactory。</li>
+<li><strong>FactoryBeanRegistrySupport</strong> -继承自DefaultSingletonBeanRegistry，在原有的基础上增加了对FactoryBean的特殊处理功能。</li>
+<li><strong>ConfigurableBeanFactory</strong> -继承了HierarchicalBeanFactory和SingletonBeanRegistry两个接口，提供配置Factory的各种方法。</li>
+<li><strong>ListableBeanFactory</strong> -继承了BeanFactory，提供各种条件获取bean的配置清单。</li>
+<li><strong>AbstractBeanFactory</strong> -抽象类，继承了FactoryBeanRegistrySupport，实现了ConfigurableBeanFactory接口，对两者的功能进行整合。</li>
+<li><strong>AutowireCapableBeanFactory</strong> -继承自BeanFactory，提供创建bean、自动注入、初始化以及应用bean的后处理器。</li>
+<li><strong>AutowireCapableBeanFactory</strong> -继承了AbstractBeanFactory，实现了AutowireCapableBeanFactory接口。</li>
+<li><strong>ConfigurableListableBeanFactory</strong> -继承了ListableBeanFactory，AutowireCapableBeanFactory，ConfigurableBeanFactory三个接口，beanFactory的配置清单，制定忽略类型及接口等。</li>
+<li><strong>DefaultListableBeanFactory</strong> -综合上面所有的功能，主要是对bean注册后的处理。</li>
+<li><strong>XmlBeanFactory</strong> 对DefaultListableBeanFactory类进行了拓展，主要用于从XML文档中读取BeanDefinition，对于注册Bean都是从父类DefaultListableBeanFactory继承的方法去实现，而唯独与父类不同的的个性化实现就是增加了XmlBeanDefinitionReader类型的reader属性。在XmlBeanFactory中主要使用reader属性对资源进行读取和注册。</li>
 </ul>
-<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-Gantzert_Felixander"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false}});</script>
+
       
     </div>
     
@@ -388,30 +396,30 @@
     
       <div>
         <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>&#x575A;&#x6301;&#x539F;&#x521B;&#x6280;&#x672F;&#x5206;&#x4EAB;&#xFF0C;&#x60A8;&#x7684;&#x652F;&#x6301;&#x5C06;&#x9F13;&#x52B1;&#x6211;&#x7EE7;&#x7EED;&#x521B;&#x4F5C;&#xFF01;</div>
-  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById(&apos;QR&apos;); if (qr.style.display === &apos;none&apos;) {qr.style.display=&apos;block&apos;;} else {qr.style.display=&apos;none&apos;}">
-    <span>&#x6253;&#x8D4F;</span>
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
   </button>
   <div id="QR" style="display: none;">
 
     
       <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/weixin.jpg" alt="&#x5362;&#x8000;&#x6CFD; &#x5FAE;&#x4FE1;&#x652F;&#x4ED8;">
-        <p>&#x5FAE;&#x4FE1;&#x652F;&#x4ED8;</p>
+        <img id="wechat_qr" src="/images/weixin.jpg" alt="卢耀泽 微信支付"/>
+        <p>微信支付</p>
       </div>
     
 
     
       <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" src="/images/zhifubao.jpg" alt="&#x5362;&#x8000;&#x6CFD; &#x652F;&#x4ED8;&#x5B9D;">
-        <p>&#x652F;&#x4ED8;&#x5B9D;</p>
+        <img id="alipay_qr" src="/images/zhifubao.jpg" alt="卢耀泽 支付宝"/>
+        <p>支付宝</p>
       </div>
     
 
     
       <div id="bitcoin" style="display: inline-block">
-        <img id="bitcoin_qr" src="/images/lyz.jpg" alt="&#x5362;&#x8000;&#x6CFD; &#x516C;&#x4F17;&#x53F7;">
-        <p>&#x516C;&#x4F17;&#x53F7;</p>
+        <img id="bitcoin_qr" src="/images/lyz.jpg" alt="卢耀泽 公众号"/>
+        <p>公众号</p>
       </div>
     
 
@@ -427,7 +435,7 @@
   
     <div>
     
-        <div style="text-align:center;color: #ccc;font-size:14px;">-------------&#x672C;&#x6587;&#x7ED3;&#x675F;<i class="fa fa-paw"></i>&#x611F;&#x8C22;&#x60A8;&#x7684;&#x9605;&#x8BFB;-------------</div>
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
     
 </div>
   
@@ -458,8 +466,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/03/27/XML&#x7684;&#x9A8C;&#x8BC1;&#x6A21;&#x5F0F;/" rel="prev" title="XML&#x7684;&#x9A8C;&#x8BC1;&#x6A21;&#x5F0F;">
-                XML&#x7684;&#x9A8C;&#x8BC1;&#x6A21;&#x5F0F; <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/27/XML的验证模式/" rel="prev" title="XML的验证模式">
+                XML的验证模式 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -481,19 +489,19 @@
       
         <!-- JiaThis Button BEGIN -->
 <div class="jiathis_style">
-<span class="jiathis_txt">&#x5206;&#x4EAB;&#x5230;&#xFF1A;</span>
-<a class="jiathis_button_fav">&#x6536;&#x85CF;&#x5939;</a>
-<a class="jiathis_button_copy">&#x590D;&#x5236;&#x7F51;&#x5740;</a>
-<a class="jiathis_button_email">&#x90AE;&#x4EF6;</a>
-<a class="jiathis_button_weixin">&#x5FAE;&#x4FE1;</a>
-<a class="jiathis_button_qzone">QQ&#x7A7A;&#x95F4;</a>
-<a class="jiathis_button_tqq">&#x817E;&#x8BAF;&#x5FAE;&#x535A;</a>
-<a class="jiathis_button_share">&#x4E00;&#x952E;&#x5206;&#x4EAB;</a>
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_share">一键分享</a>
 
-<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">&#x66F4;&#x591A;</a>
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
 <a class="jiathis_counter_style"></a>
 </div>
-<script type="text/javascript">
+<script type="text/javascript" >
 var jiathis_config={
   data_track_clickback:true,
   summary:"",
@@ -539,19 +547,19 @@ var jiathis_config={
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            &#x6587;&#x7AE0;&#x76EE;&#x5F55;
+            文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            &#x7AD9;&#x70B9;&#x6982;&#x89C8;
+            站点概览
           </li>
         </ul>
       
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <p class="site-author-name" itemprop="name">&#x5362;&#x8000;&#x6CFD;</p>
+              <p class="site-author-name" itemprop="name">卢耀泽</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
@@ -563,7 +571,7 @@ var jiathis_config={
                 <a href="/archives">
               
                   <span class="site-state-item-count">3</span>
-                  <span class="site-state-item-name">&#x65E5;&#x5FD7;</span>
+                  <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
@@ -574,7 +582,7 @@ var jiathis_config={
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
                   <span class="site-state-item-count">1</span>
-                  <span class="site-state-item-name">&#x5206;&#x7C7B;</span>
+                  <span class="site-state-item-name">分类</span>
                 </a>
               </div>
             
@@ -585,7 +593,7 @@ var jiathis_config={
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
                   <span class="site-state-item-count">4</span>
-                  <span class="site-state-item-name">&#x6807;&#x7B7E;</span>
+                  <span class="site-state-item-name">标签</span>
                 </a>
               </div>
             
@@ -645,11 +653,11 @@ var jiathis_config={
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&#xA9; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-star"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">&#x5362;&#x8000;&#x6CFD;</span>
+  <span class="author" itemprop="copyrightHolder">卢耀泽</span>
 
   
 </div>
@@ -657,7 +665,7 @@ var jiathis_config={
 
   <div class="powered-by">
 <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
-  &#x672C;&#x7AD9;&#x8BBF;&#x5BA2;&#x6570;:<span id="busuanzi_value_site_uv"></span>
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
 </span>
 </div>
   <!-- <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
@@ -851,6 +859,5 @@ var jiathis_config={
 
   <!--卖萌-->
 <script type="text/javascript" src="/js/src/dytitle.js"></script>
-
-
-<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-Gantzert_Felixander"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false}});</script></body></html>
+</body>
+</html>
