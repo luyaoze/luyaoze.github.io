@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="##Docker+Kubernetes集群+Skaffold快速迭代本地开发应用 现在我们的开发流程都是本地开发完成，然后提交代码到git，然后通过bamboo进行自动部署，但是每次修改代码都是重新启动整个容器，对于测试人员和开发人员来说都是对时间的极大浪费，虽然现在使用pass平台，部署的docker应用，但是效率来说相对来说还是比较低下。一直在想有没有一种正真意义上的运维方式，修改代码之后不需">
+<meta name="description" content="Docker+Kubernetes集群+Skaffold快速迭代本地开发应用现在我们的开发流程都是本地开发完成，然后提交代码到git，然后通过bamboo进行自动部署，但是每次修改代码都是重新启动整个容器，对于测试人员和开发人员来说都是对时间的极大浪费，虽然现在使用pass平台，部署的docker应用，但是效率来说相对来说还是比较低下。一直在想有没有一种正真意义上的运维方式，修改代码之后不需要重新">
 <meta name="keywords" content="Docker,运维">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker+Kubernetes集群+Skaffold快速迭代本地开发应用">
 <meta property="og:url" content="http://luyaoze.github.io/2018/04/01/Docker-Kubernetes集群-Skaffold快速迭代本地开发应用/index.html">
 <meta property="og:site_name" content="lyz的博客">
-<meta property="og:description" content="##Docker+Kubernetes集群+Skaffold快速迭代本地开发应用 现在我们的开发流程都是本地开发完成，然后提交代码到git，然后通过bamboo进行自动部署，但是每次修改代码都是重新启动整个容器，对于测试人员和开发人员来说都是对时间的极大浪费，虽然现在使用pass平台，部署的docker应用，但是效率来说相对来说还是比较低下。一直在想有没有一种正真意义上的运维方式，修改代码之后不需">
+<meta property="og:description" content="Docker+Kubernetes集群+Skaffold快速迭代本地开发应用现在我们的开发流程都是本地开发完成，然后提交代码到git，然后通过bamboo进行自动部署，但是每次修改代码都是重新启动整个容器，对于测试人员和开发人员来说都是对时间的极大浪费，虽然现在使用pass平台，部署的docker应用，但是效率来说相对来说还是比较低下。一直在想有没有一种正真意义上的运维方式，修改代码之后不需要重新">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-01T17:38:30.563Z">
+<meta property="og:updated_time" content="2018-04-01T17:41:47.022Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker+Kubernetes集群+Skaffold快速迭代本地开发应用">
-<meta name="twitter:description" content="##Docker+Kubernetes集群+Skaffold快速迭代本地开发应用 现在我们的开发流程都是本地开发完成，然后提交代码到git，然后通过bamboo进行自动部署，但是每次修改代码都是重新启动整个容器，对于测试人员和开发人员来说都是对时间的极大浪费，虽然现在使用pass平台，部署的docker应用，但是效率来说相对来说还是比较低下。一直在想有没有一种正真意义上的运维方式，修改代码之后不需">
+<meta name="twitter:description" content="Docker+Kubernetes集群+Skaffold快速迭代本地开发应用现在我们的开发流程都是本地开发完成，然后提交代码到git，然后通过bamboo进行自动部署，但是每次修改代码都是重新启动整个容器，对于测试人员和开发人员来说都是对时间的极大浪费，虽然现在使用pass平台，部署的docker应用，但是效率来说相对来说还是比较低下。一直在想有没有一种正真意义上的运维方式，修改代码之后不需要重新">
 
 
 
@@ -390,14 +390,12 @@
       
 
       
-        <p>##Docker+Kubernetes集群+Skaffold快速迭代本地开发应用</p>
-<pre><code>现在我们的开发流程都是本地开发完成，然后提交代码到git，然后通过bamboo进行自动部署，但是每次修改代码都是重新启动整个容器，对于测试人员和开发人员来说都是对时间的极大浪费，虽然现在使用pass平台，部署的docker应用，但是效率来说相对来说还是比较低下。一直在想有没有一种正真意义上的运维方式，修改代码之后不需要重新启动整个容器，类似于文件同步的那种，修改之后的代码只要提交之后就能够立即生效的。
+        <h1 id="Docker-Kubernetes集群-Skaffold快速迭代本地开发应用"><a href="#Docker-Kubernetes集群-Skaffold快速迭代本地开发应用" class="headerlink" title="Docker+Kubernetes集群+Skaffold快速迭代本地开发应用"></a>Docker+Kubernetes集群+Skaffold快速迭代本地开发应用</h1><pre><code>现在我们的开发流程都是本地开发完成，然后提交代码到git，然后通过bamboo进行自动部署，但是每次修改代码都是重新启动整个容器，对于测试人员和开发人员来说都是对时间的极大浪费，虽然现在使用pass平台，部署的docker应用，但是效率来说相对来说还是比较低下。一直在想有没有一种正真意义上的运维方式，修改代码之后不需要重新启动整个容器，类似于文件同步的那种，修改之后的代码只要提交之后就能够立即生效的。
 
 最近几年docker一直很火，而我在自学大数据的过程中，由于自己太懒，不想手动去搭建本地的Hadoop，Hbase,Hive，Spark等等之类的环境，于是，我选择了docker,虽然对与docker也是一知半解，没有深入去了解，但是用了一段时间之后，就发现，容器技术为什么这么火。只需要几个简单的命令，然后从dockerHub上拉取个镜像，然后启动，就能够完整的搭建本地开发环境，而且对于集群环境的搭建也是轻而易举，不得不感叹，我们都落伍了。
 
 就在几天前，我遇到了Skaffold，它是一款命令行工具，旨在促进kubernetes应用的持续开发，Skaffold可以将构建、推送及向kubernetes集群部署应用程序的过程自动化，听上去是不是很舒服呀~~~于是好奇的我打算亲自动手试试。
-</code></pre><p>###介绍</p>
-<pre><code>Skaffold是一款命令行工具，旨在促进Kubernetes应用的持续开发。你可以在本地迭代应用源码，然后将其部署到本地或者远程Kubernetes集群中。Skaffold会处理构建、上传和应用部署方面的工作流。它通用可以在自动化环境中使用，例如CI/CD流水线，以实施同样的工作流，并作为将应用迁移到生产环境时的工具 —— Skaffold官方文档
+</code></pre><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><pre><code>Skaffold是一款命令行工具，旨在促进Kubernetes应用的持续开发。你可以在本地迭代应用源码，然后将其部署到本地或者远程Kubernetes集群中。Skaffold会处理构建、上传和应用部署方面的工作流。它通用可以在自动化环境中使用，例如CI/CD流水线，以实施同样的工作流，并作为将应用迁移到生产环境时的工具 —— Skaffold官方文档
 </code></pre><p>Skaffold的特点：</p>
 <ul>
 <li>没有服务器端组件，所以不会增加你的集群开销</li>
@@ -407,17 +405,15 @@
 <li>支持开发环境和生产环境，通过仅一次运行manifest，或者持续观察变更</li>
 </ul>
 <p>另外Skaffold是一个可插拔的架构，允许开发人员选择自己最合适的工作流工具</p>
-<p>###使用</p>
-<p>要使用Skaffold最好是提前在我们本地安装一套单节点的kubernetes集群，比如minikube或者Docker for MAC/Windows的Edge版</p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>要使用Skaffold最好是提前在我们本地安装一套单节点的kubernetes集群，比如minikube或者Docker for MAC/Windows的Edge版</p>
 <p>我的本地环境MacOS10.13.3+Docker-18.03.0-ce。</p>
-<p>####1.skaffold的安装（MAC版的，Linux版的大家请自行谷歌）</p>
-<p>通过命令行工具，运行：</p>
+<h4 id="1-skaffold的安装（MAC版的，Linux版的大家请自行谷歌）"><a href="#1-skaffold的安装（MAC版的，Linux版的大家请自行谷歌）" class="headerlink" title="1.skaffold的安装（MAC版的，Linux版的大家请自行谷歌）"></a>1.skaffold的安装（MAC版的，Linux版的大家请自行谷歌）</h4><p>通过命令行工具，运行：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -Lo skaffold https:<span class="regexp">//</span>storage.googleapis.com<span class="regexp">/skaffold/</span>releases<span class="regexp">/latest/</span>skaffold-darwin-amd64 &amp;&amp; chmod +x skaffold &amp;&amp; sudo mv skaffold <span class="regexp">/usr/</span>local<span class="regexp">/bin</span></span><br></pre></td></tr></table></figure>
 <p>当然如果由于某些原因你不能访问上面的链接的话，则可以前往Skaffold的github release页面下载相应的安装包。</p>
-<p>####2.Kubernetes集群<br>为了简单起见，我使用的是Docker for Mac（Edge）自带的单节点的Kubernetes集群，至于这个的安装，大家谷歌一下，安装的时候建议翻墙，我的MAC上使用的翻墙软件为VPN Plus，因为这个是免费的，而且相对比较稳定，不翻墙的话Kubernetes的有些镜像可能下载会失败。</p>
-<p>####3.kubectl<br>要使用kubernetes那么肯定kubectl也是少不了的，在本地配置上你的目标群集的当前上下文进行开发，这个也是跟docker一起安装的。</p>
-<p>####4.Docker<br>这个不是今天的重点，自行谷歌。</p>
-<p>###开发<br>我们可以在本地开发一个非常简单的应用程序，然后通过Skaffold来进行迭代开发，这里我们直接使用Skaffold的官方示例，首先clone代码：</p>
+<h4 id="2-Kubernetes集群"><a href="#2-Kubernetes集群" class="headerlink" title="2.Kubernetes集群"></a>2.Kubernetes集群</h4><p>为了简单起见，我使用的是Docker for Mac（Edge）自带的单节点的Kubernetes集群，至于这个的安装，大家谷歌一下，安装的时候建议翻墙，我的MAC上使用的翻墙软件为VPN Plus，因为这个是免费的，而且相对比较稳定，不翻墙的话Kubernetes的有些镜像可能下载会失败。</p>
+<h4 id="3-kubectl"><a href="#3-kubectl" class="headerlink" title="3.kubectl"></a>3.kubectl</h4><p>要使用kubernetes那么肯定kubectl也是少不了的，在本地配置上你的目标群集的当前上下文进行开发，这个也是跟docker一起安装的。</p>
+<h4 id="4-Docker"><a href="#4-Docker" class="headerlink" title="4.Docker"></a>4.Docker</h4><p>这个不是今天的重点，自行谷歌。</p>
+<h3 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h3><p>我们可以在本地开发一个非常简单的应用程序，然后通过Skaffold来进行迭代开发，这里我们直接使用Skaffold的官方示例，首先clone代码：</p>
 <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">https</span>://github.com/GoogleCloudPlatform/skaffold</span><br></pre></td></tr></table></figure>
 <p>然后我们定位到examples/getting-started目录下去：</p>
 <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ cd skaffold/examples/getting-started                          </span><br><span class="line">$ tree                                                          </span><br><span class="line">.</span><br><span class="line"><span class="string">|____skaffold-gcb.yaml</span></span><br><span class="line"><span class="string">|____Dockerfile</span></span><br><span class="line"><span class="string">|____k8s-pod.yaml</span></span><br><span class="line"><span class="string">|____skaffold.yaml</span></span><br><span class="line"><span class="string">|____main.go</span></span><br></pre></td></tr></table></figure>
@@ -443,11 +439,9 @@
 <p>func main() {<br>    for {<br>        fmt.Println(“Hello lyz!”)<br>        time.Sleep(time.Second * 1)<br>    }<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当我们保存该文件后，观察 POD 的输出信息：</span><br></pre></td></tr></table></figure></p>
 <p>Starting build…<br>Found [docker-for-desktop] context, using local docker daemon.<br>Sending build context to Docker daemon  6.144kB<br>Step 1/5 : FROM golang:1.9.4-alpine3.7<br> —&gt; fb6e10bf973b<br>Step 2/5 : WORKDIR /go/src/github.com/GoogleCloudPlatform/skaffold/examples/getting-started<br> —&gt; Using cache<br> —&gt; 8f1eabcc41a2<br>Step 3/5 : CMD [“./app”]<br> —&gt; Using cache<br> —&gt; 8c65b0140915<br>Step 4/5 : COPY main.go .<br> —&gt; 9fc3e7aaff40<br>Step 5/5 : RUN go build -o app main.go<br> —&gt; Running in 508b97f29e88<br> —&gt; 811875a31d12<br>Successfully built 811875a31d12<br>Successfully tagged 7c393e3a0367411d5e7bec05ae632eb5:latest<br>Successfully tagged gcr.io/k8s-skaffold/skaffold-example:811875a31d122f07a30dfca0c0058eb44b2c7100b2794a94f9fd52e639e97fff<br>Build complete in 1.706332689s<br>Starting deploy…<br>Deploying k8s-pod.yaml…<br>Deploy complete in 253.419235ms<br>Watching for changes…<br>[getting-started] Hello lyz!<br>[getting-started] Hello lyz!<br>[getting-started] Hello lyz!<br><code>`</code></p>
 <p>修改完文件保存之后，我们没有做任何操作，就看见我们的修改结果，同样我们可以用上面的样式去查看下 POD 里面的镜像标签是已经更改过了。</p>
-<p>###总结</p>
-<p>我这里为了说明Skaffold的使用，可能描述显得有点拖沓，但是当你自己去使用的时候，就完全能够感受到Skaffold为开发kubernetes应用带来的方便高效，大大的提高了我们的生产力。 另外在kubernetes开发自动化工具领域，还有一些其他的选择，比如Azure的Draft、Datawire 的 Forge 以及 Weavework 的 Flux，大家都可以去使用一下，其他微软的Draft是和Helm结合得非常好，不过Skaffold当然也是支持的，工具始终是工具，能为我们提升效率的就是好工具，不过从开源的角度来说，信 Google 准没错。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>我这里为了说明Skaffold的使用，可能描述显得有点拖沓，但是当你自己去使用的时候，就完全能够感受到Skaffold为开发kubernetes应用带来的方便高效，大大的提高了我们的生产力。 另外在kubernetes开发自动化工具领域，还有一些其他的选择，比如Azure的Draft、Datawire 的 Forge 以及 Weavework 的 Flux，大家都可以去使用一下，其他微软的Draft是和Helm结合得非常好，不过Skaffold当然也是支持的，工具始终是工具，能为我们提升效率的就是好工具，不过从开源的角度来说，信 Google 准没错。</p>
 <p>是不是感觉好神奇的样子，容器跟k8s的自动化让我有点惊讶，虽然对k8s还不是很了解，但是通过今天的操作让我对它充满了兴趣，接下来再慢慢深入。如此自动化的运维开发，相信对于开发和测试的效率会有一个质的提升，真心希望公司也能尽快投入到k8s的环保～～～</p>
-<p>##参考资料</p>
-<ul>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
 <li><a href="https://github.com/GoogleCloudPlatform/skaffold" target="_blank" rel="noopener">https://github.com/GoogleCloudPlatform/skaffold</a></li>
 </ul>
 
@@ -618,8 +612,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -686,6 +689,22 @@ var jiathis_config={
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Kubernetes集群-Skaffold快速迭代本地开发应用"><span class="nav-number">1.</span> <span class="nav-text">Docker+Kubernetes集群+Skaffold快速迭代本地开发应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍"><span class="nav-number">1.0.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">1.0.2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-skaffold的安装（MAC版的，Linux版的大家请自行谷歌）"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">1.skaffold的安装（MAC版的，Linux版的大家请自行谷歌）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Kubernetes集群"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">2.Kubernetes集群</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-kubectl"><span class="nav-number">1.0.2.3.</span> <span class="nav-text">3.kubectl</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-Docker"><span class="nav-number">1.0.2.4.</span> <span class="nav-text">4.Docker</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发"><span class="nav-number">1.0.3.</span> <span class="nav-text">开发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.0.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">1.1.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
