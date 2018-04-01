@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Docker,运维," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="lyz的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="##Docker+Kubernetes集群+Skaffold快速迭代本地开发应用 现在我们的开发流程都是本地开发完成，然后提交代码到git，然后通过bamboo进行自动部署，但是每次修改代码都是重新启动整个容器，对于测试人员和开发人员来说都是对时间的极大浪费，虽然现在使用pass平台，部署的docker应用，但是效率来说相对来说还是比较低下。一直在想有没有一种正真意义上的运维方式，修改代码之后不需">
+<meta name="keywords" content="Docker,运维">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker+Kubernetes集群+Skaffold快速迭代本地开发应用">
+<meta property="og:url" content="http://luyaoze.github.io/2018/04/01/Docker-Kubernetes集群-Skaffold快速迭代本地开发应用/index.html">
+<meta property="og:site_name" content="lyz的博客">
+<meta property="og:description" content="##Docker+Kubernetes集群+Skaffold快速迭代本地开发应用 现在我们的开发流程都是本地开发完成，然后提交代码到git，然后通过bamboo进行自动部署，但是每次修改代码都是重新启动整个容器，对于测试人员和开发人员来说都是对时间的极大浪费，虽然现在使用pass平台，部署的docker应用，但是效率来说相对来说还是比较低下。一直在想有没有一种正真意义上的运维方式，修改代码之后不需">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-01T17:38:30.563Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker+Kubernetes集群+Skaffold快速迭代本地开发应用">
+<meta name="twitter:description" content="##Docker+Kubernetes集群+Skaffold快速迭代本地开发应用 现在我们的开发流程都是本地开发完成，然后提交代码到git，然后通过bamboo进行自动部署，但是每次修改代码都是重新启动整个容器，对于测试人员和开发人员来说都是对时间的极大浪费，虽然现在使用pass平台，部署的docker应用，但是效率来说相对来说还是比较低下。一直在想有没有一种正真意义上的运维方式，修改代码之后不需">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://luyaoze.github.io/2018/04/01/Docker-Kubernetes集群-Skaffold快速迭代本地开发应用/"/>
+
+
+
+
+
+  <title>Docker+Kubernetes集群+Skaffold快速迭代本地开发应用 | lyz的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lyz的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">静静地搬砖</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://luyaoze.github.io/2018/04/01/Docker-Kubernetes集群-Skaffold快速迭代本地开发应用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="卢耀泽">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lyz的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Docker+Kubernetes集群+Skaffold快速迭代本地开发应用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-01T21:47:59+08:00">
+                2018-04-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/Kubernetes/Skaffold/" itemprop="url" rel="index">
+                    <span itemprop="name">Skaffold</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/01/Docker-Kubernetes集群-Skaffold快速迭代本地开发应用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/04/01/Docker-Kubernetes集群-Skaffold快速迭代本地开发应用/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>##Docker+Kubernetes集群+Skaffold快速迭代本地开发应用</p>
+<pre><code>现在我们的开发流程都是本地开发完成，然后提交代码到git，然后通过bamboo进行自动部署，但是每次修改代码都是重新启动整个容器，对于测试人员和开发人员来说都是对时间的极大浪费，虽然现在使用pass平台，部署的docker应用，但是效率来说相对来说还是比较低下。一直在想有没有一种正真意义上的运维方式，修改代码之后不需要重新启动整个容器，类似于文件同步的那种，修改之后的代码只要提交之后就能够立即生效的。
+
+最近几年docker一直很火，而我在自学大数据的过程中，由于自己太懒，不想手动去搭建本地的Hadoop，Hbase,Hive，Spark等等之类的环境，于是，我选择了docker,虽然对与docker也是一知半解，没有深入去了解，但是用了一段时间之后，就发现，容器技术为什么这么火。只需要几个简单的命令，然后从dockerHub上拉取个镜像，然后启动，就能够完整的搭建本地开发环境，而且对于集群环境的搭建也是轻而易举，不得不感叹，我们都落伍了。
+
+就在几天前，我遇到了Skaffold，它是一款命令行工具，旨在促进kubernetes应用的持续开发，Skaffold可以将构建、推送及向kubernetes集群部署应用程序的过程自动化，听上去是不是很舒服呀~~~于是好奇的我打算亲自动手试试。
+</code></pre><p>###介绍</p>
+<pre><code>Skaffold是一款命令行工具，旨在促进Kubernetes应用的持续开发。你可以在本地迭代应用源码，然后将其部署到本地或者远程Kubernetes集群中。Skaffold会处理构建、上传和应用部署方面的工作流。它通用可以在自动化环境中使用，例如CI/CD流水线，以实施同样的工作流，并作为将应用迁移到生产环境时的工具 —— Skaffold官方文档
+</code></pre><p>Skaffold的特点：</p>
+<ul>
+<li>没有服务器端组件，所以不会增加你的集群开销</li>
+<li>自动检测源代码中的更改并自动构建/推送/部署</li>
+<li>自动更新镜像TAG，不要担心手动去更改kubernetes的 manifest 文件</li>
+<li>一次性构建/部署/上传不同的应用，因此它对于微服务同样完美适配</li>
+<li>支持开发环境和生产环境，通过仅一次运行manifest，或者持续观察变更</li>
+</ul>
+<p>另外Skaffold是一个可插拔的架构，允许开发人员选择自己最合适的工作流工具</p>
+<p>###使用</p>
+<p>要使用Skaffold最好是提前在我们本地安装一套单节点的kubernetes集群，比如minikube或者Docker for MAC/Windows的Edge版</p>
+<p>我的本地环境MacOS10.13.3+Docker-18.03.0-ce。</p>
+<p>####1.skaffold的安装（MAC版的，Linux版的大家请自行谷歌）</p>
+<p>通过命令行工具，运行：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -Lo skaffold https:<span class="regexp">//</span>storage.googleapis.com<span class="regexp">/skaffold/</span>releases<span class="regexp">/latest/</span>skaffold-darwin-amd64 &amp;&amp; chmod +x skaffold &amp;&amp; sudo mv skaffold <span class="regexp">/usr/</span>local<span class="regexp">/bin</span></span><br></pre></td></tr></table></figure>
+<p>当然如果由于某些原因你不能访问上面的链接的话，则可以前往Skaffold的github release页面下载相应的安装包。</p>
+<p>####2.Kubernetes集群<br>为了简单起见，我使用的是Docker for Mac（Edge）自带的单节点的Kubernetes集群，至于这个的安装，大家谷歌一下，安装的时候建议翻墙，我的MAC上使用的翻墙软件为VPN Plus，因为这个是免费的，而且相对比较稳定，不翻墙的话Kubernetes的有些镜像可能下载会失败。</p>
+<p>####3.kubectl<br>要使用kubernetes那么肯定kubectl也是少不了的，在本地配置上你的目标群集的当前上下文进行开发，这个也是跟docker一起安装的。</p>
+<p>####4.Docker<br>这个不是今天的重点，自行谷歌。</p>
+<p>###开发<br>我们可以在本地开发一个非常简单的应用程序，然后通过Skaffold来进行迭代开发，这里我们直接使用Skaffold的官方示例，首先clone代码：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">https</span>://github.com/GoogleCloudPlatform/skaffold</span><br></pre></td></tr></table></figure>
+<p>然后我们定位到examples/getting-started目录下去：</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ cd skaffold/examples/getting-started                          </span><br><span class="line">$ tree                                                          </span><br><span class="line">.</span><br><span class="line"><span class="string">|____skaffold-gcb.yaml</span></span><br><span class="line"><span class="string">|____Dockerfile</span></span><br><span class="line"><span class="string">|____k8s-pod.yaml</span></span><br><span class="line"><span class="string">|____skaffold.yaml</span></span><br><span class="line"><span class="string">|____main.go</span></span><br></pre></td></tr></table></figure>
+<p>该目录下面有一个非常简单的golang程序:（main.go）</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"Hello world!"</span>)</span><br><span class="line">		time.Sleep(time.Second * <span class="number">1</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中skaffold-gcb.yaml文件我们可以暂时忽略，这个文件是和google cloud结合使用的，我们可以看下skaffold.yaml文件内容，如下：</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">apiVersion:</span> skaffold/v1alpha2</span><br><span class="line"><span class="symbol">kind:</span> Config</span><br><span class="line"><span class="symbol">build:</span></span><br><span class="line"><span class="symbol">  artifacts:</span></span><br><span class="line">  - imageName: gcr.io<span class="meta-keyword">/k8s-skaffold/</span>skaffold-example</span><br><span class="line"><span class="symbol">    workspace:</span> .</span><br><span class="line"><span class="symbol">  local:</span> &#123;&#125;</span><br><span class="line"><span class="symbol">deploy:</span></span><br><span class="line"><span class="symbol">  kubectl:</span></span><br><span class="line"><span class="symbol">    manifests:</span></span><br><span class="line">      - k8s-*</span><br></pre></td></tr></table></figure>
+<p>然后我们可以看到k8s-pod.yaml文件，修改image的参数为IMAGE_NAME，这个地方Skaffold会自动帮我们替换成正在的镜像地址的，如下：</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">apiVersion:</span> v1</span><br><span class="line"><span class="symbol">kind:</span> Pod</span><br><span class="line"><span class="symbol">metadata:</span></span><br><span class="line"><span class="symbol">  name:</span> getting-started</span><br><span class="line"><span class="symbol">spec:</span></span><br><span class="line"><span class="symbol">  containers:</span></span><br><span class="line">  - name: getting-started</span><br><span class="line"><span class="symbol">    image:</span> gcr.io<span class="meta-keyword">/k8s-skaffold/</span>skaffold-example</span><br></pre></td></tr></table></figure>
+<p>然后我们就可以在getting-started目录下面执行skaffold dev命令了：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">skaffold dev                                           </span><br><span class="line">Starting build...</span><br><span class="line">Found [docker-<span class="keyword">for</span>-desktop] context, using local docker daemon.</span><br><span class="line">Sending build context <span class="keyword">to</span> Docker daemon  <span class="number">6.144</span>kB</span><br><span class="line">Step <span class="number">1</span>/<span class="number">5</span> : FROM golan<span class="variable">g:1</span>.<span class="number">9.4</span>-alpine3.<span class="number">7</span></span><br><span class="line"><span class="number">1.9</span>.<span class="number">4</span>-alpine3.<span class="number">7</span>: Pulling from library/golang</span><br><span class="line">ff3a5c916c92: Already <span class="built_in">exists</span></span><br><span class="line">f32d2ea73378: Already <span class="built_in">exists</span></span><br><span class="line"><span class="number">7</span>e338747c3c<span class="variable">a:</span> Already <span class="built_in">exists</span></span><br><span class="line"><span class="number">3</span>a75aa9cb0c3: Pulling fs layer</span><br><span class="line"><span class="number">7</span>a7cfbabfc25: Pulling fs layer</span><br><span class="line"><span class="number">43</span>b7df8cdce7: Pulling fs layer</span><br><span class="line"><span class="number">7</span>a7cfbabfc25: Download <span class="built_in">complete</span></span><br><span class="line"><span class="number">43</span>b7df8cdce7: Verifying Checksum</span><br><span class="line"><span class="number">43</span>b7df8cdce7: Download <span class="built_in">complete</span></span><br><span class="line"><span class="number">3</span>a75aa9cb0c3: Verifying Checksum</span><br><span class="line"><span class="number">3</span>a75aa9cb0c3: Download <span class="built_in">complete</span></span><br><span class="line"><span class="number">3</span>a75aa9cb0c3: Pull <span class="built_in">complete</span></span><br><span class="line"><span class="number">7</span>a7cfbabfc25: Pull <span class="built_in">complete</span></span><br><span class="line"><span class="number">43</span>b7df8cdce7: Pull <span class="built_in">complete</span></span><br><span class="line">Diges<span class="variable">t:</span> <span class="built_in">sha256</span>:<span class="number">566</span>ec2d92f3f2ac0a83b941bacff33a2d3a7d98eddcbc288ada912be969cd5aa</span><br><span class="line">Statu<span class="variable">s:</span> Downloaded newer image <span class="keyword">for</span> golan<span class="variable">g:1</span>.<span class="number">9.4</span>-alpine3.<span class="number">7</span></span><br><span class="line"> ---&gt; fb6e10bf973b</span><br><span class="line">Step <span class="number">2</span>/<span class="number">5</span> : WORKDIR /<span class="keyword">go</span>/src/github.<span class="keyword">com</span>/GoogleCloudPlatform/skaffold/examples/getting-started</span><br><span class="line"> ---&gt; <span class="number">8</span>f1eabcc41a2</span><br><span class="line">Step <span class="number">3</span>/<span class="number">5</span> : CMD [<span class="string">"./app"</span>]</span><br><span class="line"> ---&gt; Running in <span class="number">2</span>e3279a84ada</span><br><span class="line"> ---&gt; <span class="number">8</span>c65b0140915</span><br><span class="line">Step <span class="number">4</span>/<span class="number">5</span> : COPY main.<span class="keyword">go</span> .</span><br><span class="line"> ---&gt; <span class="number">420036</span>b19bd0</span><br><span class="line">Step <span class="number">5</span>/<span class="number">5</span> : RUN <span class="keyword">go</span> build -<span class="keyword">o</span> app main.<span class="keyword">go</span></span><br><span class="line"> ---&gt; Running in <span class="number">2</span>cd819ac2241</span><br><span class="line"> ---&gt; aec223791bb7</span><br><span class="line">Successfully built aec223791bb7</span><br><span class="line">Successfully tagged <span class="number">8</span>da0c4f31bfe882ce1117dda832e4f32:latest</span><br><span class="line">Successfully tagged gcr.io/k8s-skaffold/skaffold-example:aec223791bb75362e28fe3aeeac3c7ba9fdf80c0c34b5e8fd068157d8219c277</span><br><span class="line">Build <span class="built_in">complete</span> in <span class="number">1</span>m15.<span class="number">696492271</span>s</span><br><span class="line">Starting deploy...</span><br><span class="line">Deploying k8s-pod.yaml...</span><br><span class="line">Deploy <span class="built_in">complete</span> in <span class="number">329.744527</span>ms</span><br><span class="line">Watching <span class="keyword">for</span> <span class="keyword">changes</span>...</span><br><span class="line">[getting-started] Hello world!</span><br><span class="line">[getting-started] Hello world!</span><br><span class="line">[getting-started] Hello world!</span><br></pre></td></tr></table></figure>
+<p>由于没有安装过golang相关的苦，所以有可能会失败，失败之后退出之后重新执行<figure class="highlight plain"><figcaption><span>dev```命令就好了，如果尝试多次还不好使，建议使用flowVPN这个翻墙插件，网速让我直接开始怀疑人生。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Skaffold已经帮我们做了很多事情了：</span><br><span class="line"></span><br><span class="line">用本地源代码构建 Docker 镜像</span><br><span class="line">用它的sha256值作为镜像的标签</span><br><span class="line">设置skaffold.yaml文件中定义的 kubernetes manifests 的镜像地址</span><br><span class="line">用kubectl apply -f命令来部署 kubernetes 应用</span><br><span class="line">部署完成后，我们可以看到 pod 打印出了如下的信息：</span><br></pre></td></tr></table></figure></p>
+<p>[getting-started] Hello world!<br>[getting-started] Hello world!<br>[getting-started] Hello world!<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">同样的，我们可以通过kubectl工具查看当前部署的 POD：</span><br></pre></td></tr></table></figure></p>
+<p>kubectl get pods<br>NAME              READY     STATUS    RESTARTS   AGE<br>getting-started   1/1       Running   0          1m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">然后我们可以打印出上面的 POD 的详细信息</span><br></pre></td></tr></table></figure></p>
+<p>$ kubectl get pod getting-started  -o yaml<br>…<br>spec:<br>  containers:</p>
+<ul>
+<li>image: gcr.io/k8s-skaffold/skaffold-example:811875a31d122f07a30dfca0c0058eb44b2c7100b2794a94f9fd52e639e97fff<br>imagePullPolicy: IfNotPresent<br>name: getting-started<br>…<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">我们可以看到我们部署的 POD 的镜像地址，和我们已有的 docker 镜像地址和标签是一样的：</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>docker images |grep skaffold<br>gcr.io/k8s-skaffold/skaffold-example                     811875a31d122f07a30dfca0c0058eb44b2c7100b2794a94f9fd52e639e97fff   811875a31d12        About a minute ago   271MB<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">现在，我们来更改下我们的<span class="selector-tag">main</span><span class="selector-class">.go</span>文件：</span><br></pre></td></tr></table></figure></p>
+<p>package main</p>
+<p>import (<br>    “fmt”<br>    “time”<br>)</p>
+<p>func main() {<br>    for {<br>        fmt.Println(“Hello lyz!”)<br>        time.Sleep(time.Second * 1)<br>    }<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当我们保存该文件后，观察 POD 的输出信息：</span><br></pre></td></tr></table></figure></p>
+<p>Starting build…<br>Found [docker-for-desktop] context, using local docker daemon.<br>Sending build context to Docker daemon  6.144kB<br>Step 1/5 : FROM golang:1.9.4-alpine3.7<br> —&gt; fb6e10bf973b<br>Step 2/5 : WORKDIR /go/src/github.com/GoogleCloudPlatform/skaffold/examples/getting-started<br> —&gt; Using cache<br> —&gt; 8f1eabcc41a2<br>Step 3/5 : CMD [“./app”]<br> —&gt; Using cache<br> —&gt; 8c65b0140915<br>Step 4/5 : COPY main.go .<br> —&gt; 9fc3e7aaff40<br>Step 5/5 : RUN go build -o app main.go<br> —&gt; Running in 508b97f29e88<br> —&gt; 811875a31d12<br>Successfully built 811875a31d12<br>Successfully tagged 7c393e3a0367411d5e7bec05ae632eb5:latest<br>Successfully tagged gcr.io/k8s-skaffold/skaffold-example:811875a31d122f07a30dfca0c0058eb44b2c7100b2794a94f9fd52e639e97fff<br>Build complete in 1.706332689s<br>Starting deploy…<br>Deploying k8s-pod.yaml…<br>Deploy complete in 253.419235ms<br>Watching for changes…<br>[getting-started] Hello lyz!<br>[getting-started] Hello lyz!<br>[getting-started] Hello lyz!<br><code>`</code></p>
+<p>修改完文件保存之后，我们没有做任何操作，就看见我们的修改结果，同样我们可以用上面的样式去查看下 POD 里面的镜像标签是已经更改过了。</p>
+<p>###总结</p>
+<p>我这里为了说明Skaffold的使用，可能描述显得有点拖沓，但是当你自己去使用的时候，就完全能够感受到Skaffold为开发kubernetes应用带来的方便高效，大大的提高了我们的生产力。 另外在kubernetes开发自动化工具领域，还有一些其他的选择，比如Azure的Draft、Datawire 的 Forge 以及 Weavework 的 Flux，大家都可以去使用一下，其他微软的Draft是和Helm结合得非常好，不过Skaffold当然也是支持的，工具始终是工具，能为我们提升效率的就是好工具，不过从开源的角度来说，信 Google 准没错。</p>
+<p>是不是感觉好神奇的样子，容器跟k8s的自动化让我有点惊讶，虽然对k8s还不是很了解，但是通过今天的操作让我对它充满了兴趣，接下来再慢慢深入。如此自动化的运维开发，相信对于开发和测试的效率会有一个质的提升，真心希望公司也能尽快投入到k8s的环保～～～</p>
+<p>##参考资料</p>
+<ul>
+<li><a href="https://github.com/GoogleCloudPlatform/skaffold" target="_blank" rel="noopener">https://github.com/GoogleCloudPlatform/skaffold</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/weixin.jpg" alt="卢耀泽 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/zhifubao.jpg" alt="卢耀泽 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/lyz.jpg" alt="卢耀泽 公众号"/>
+        <p>公众号</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"><i class="fa fa-tag"></i> Docker</a>
+          
+            <a href="/tags/运维/" rel="tag"><i class="fa fa-tag"></i> 运维</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/30/容器的功能扩展/" rel="next" title="容器的功能扩展">
+                <i class="fa fa-chevron-left"></i> 容器的功能扩展
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">卢耀泽</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">卢耀泽</span>
+
+  
+</div>
+
+
+  <div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+  <!-- <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div> -->
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: '1522590479000', 
+            owner: 'luyaoze',
+            repo: 'gitment-comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '6ffe72603c327d768076ed7de9eb93f47b736abf',
+            
+                client_id: 'f2ca7c1e6b757189490c'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  <!--卖萌-->
+<script type="text/javascript" src="/js/src/dytitle.js"></script>
+</body>
+</html>
