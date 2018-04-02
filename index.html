@@ -265,6 +265,217 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://luyaoze.github.io/2018/04/02/AOP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="卢耀泽">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lyz的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/02/AOP/" itemprop="url">AOP</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-02T22:02:59+08:00">
+                2018-04-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/spring/" itemprop="url" rel="index">
+                    <span itemprop="name">spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/spring/aop/" itemprop="url" rel="index">
+                    <span itemprop="name">aop</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h1><pre><code>我们知道，使用面向对象编程（OOP）有一些弊端，当需要为多个不具有及继承关系的对象引入同一个公共行为时，例如日志、安全检测等，我们只有在每个对象里引用公共行为，这样程序中就产生了大量的重复代码，程序就不便于维护了，所以就有了一个，面向对象编程的补充，即面向切面编程（AOP），AOP所关注的方向时横向的，不同于OOP的纵向。
+使用@AspectJ注解对POJO进行标注，使用AspectJ切点表达式语法进行切点定义，可以通过切点函数、运算符、通配符等高级功能进行切点定义，拥有强大的连接点描述能力。
+</code></pre><h2 id="动态AOP使用示例"><a href="#动态AOP使用示例" class="headerlink" title="动态AOP使用示例"></a>动态AOP使用示例</h2><pre><code>（1）创建用于拦截的bean
+在实际工作中，此bean可能满足业务需要的核心逻辑，例如test方法中可能会封装着某个核心业务，但是，如果我们想在test前后加入日志来跟踪调试，如果直接修改源码并不符合面向对戏那个的设计方法，而且随意改动原有代码也会造成一定的风险，还好接下来的Spring帮我们做到了这一点。
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestBean</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> String testStr = <span class="string">"testStr"</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getTestStr</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> testStr;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTestStr</span><span class="params">(String testStr)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.testStr = testStr;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"test"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>(2)创建Advisor。
+Spring中摒弃了最原始的繁杂配置方式而采用@AspectJ注解对POJO进行标注，使AOP的工作大大简化，例如，在AspectJTest类中，我们要做的就是在所有类的test方法执行前在控制台中打印beforeTest，而在所有类的test方法执行后打印afterTest，同时又使用环绕的方式在所有类的方法执行前后再次分别打印before1和after1.
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AsoectJTest</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//定义切点</span></span><br><span class="line">    <span class="meta">@Pointcut</span>(<span class="string">"execution(* *.test(..))"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Before</span>(<span class="string">"test()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">beforeTest</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"beforeTest"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@After</span>(<span class="string">"test()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterTest</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"afterTest"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Around</span>(<span class="string">"test()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">aroundTest</span><span class="params">(ProceedingJoinPoint p)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"before1"</span>);</span><br><span class="line">        Object o = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            o = p.proceed();</span><br><span class="line">        &#125;<span class="keyword">catch</span>(Throwable e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"after1"</span>);</span><br><span class="line">        <span class="keyword">return</span> o;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>(3)创建配置文件
+XML是Spring的基础，尽管Spring配置一再简化，并且大有使用注解取代XML配置之势，但是无论如何，至少现在XML还是Spring的基础。要在Spring中开启AOP够功能，还需要在Spring配置文件中声明&lt;aop:aspectj-autoproxy /&gt;。
+</code></pre><h2 id="AOP标签属性"><a href="#AOP标签属性" class="headerlink" title="AOP标签属性"></a>AOP标签属性</h2><ul>
+<li><p>proxy-target-class和expose-proxy</p>
+<p>  （1）proxy-target-class</p>
+<p>  SpringAOP部分使用JDK动态代理或者CGLIB来为目标对象创建代理。（建议尽量使用JDK动态代理），如果被代理的目标对象实现了至少一个接口，则会使用JDK动态代理。所有该目标类型实现的接口都将被代理。若该目标对象没有实现任何接口，则创建一个CGLIB代理。如果你希望强制使用CGLIB代理，（例如希望代理目标对象的所有方法，而不是实现自接口的方法）那也可以，但是需要考虑一下两个问题。</p>
+<ul>
+<li>无法通知（advise）Final方法，因为他们不能被重写。</li>
+<li><p>你需要将CGLIB二进制发行包放在classpath下面。</p>
+<p>相比较而言吗，JDK本身就提供了动态代理，强制使用CGLIB代理需要将aop:config的proxy-target-class属性设为true。</p>
+<p>当需要使用CGLIB代理和@AspectJ自动代理支持，需要设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;aop:aspectj-autoproxy proxy-target-class=&quot;true&quot;&gt;...&lt;/aop:config&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>* JDK动态代理：其代理对象必须是某个接口的实现，它是通过在运行期间内创建一个接口来实现对目标对目标对象的代理。
+* CGLIB代理：实现原理类似于JDK动态代理，只是它在运行期间生成的代理对象是针对目标类拓展的子类。CGLIB是高效的代码生成包，底层是依靠ASM（开源的Java字节码编辑类库）操作字节码实现的，性能比JDK强。
+* expose-proxy：有时候目标对象内部的自我调用将无法实施切面中的增强，如下实例：
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AService</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">a</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">b</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AServiceImpl</span> <span class="keyword">implements</span> <span class="title">AService</span></span>&#123;</span><br><span class="line">    <span class="meta">@Transactional</span>(propagation = Propagation.REQUIRED)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> vlid <span class="title">a</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.b();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Transactional</span>(propagation = Propagation.REQUIRES_NEW)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">b</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+此处的this指向目标对象，因此调用this.b（）将不会执行b事物切面，即不会执行事务增强，因此b方法的事务定义“@Transactional(propagation = Propagation.REQUIRES_NEW)”将不会执行，为了解决这个问题，我们可以这样做
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;aop:aspectj-autoproxy expose-proxy=<span class="string">"true"</span>/&gt;</span><br></pre></td></tr></table></figure>
+<pre><code>然后将以上代码中的“this.b();”修改为“((AService)AopContext.currentProxy()).b();”即可。通过以上的修改便可以完成对a和b方法的同时增强。
+最后注册组件并通知，便于监听器做进一步处理。
+</code></pre><h2 id="静态AOP使用示例"><a href="#静态AOP使用示例" class="headerlink" title="静态AOP使用示例"></a>静态AOP使用示例</h2><pre><code>加载时织入（Load-Time Weaving,LTW）指的是在虚拟机载入字节码文件时动态织入AspectJ切面。Spring框架的值添加为AspectJ LTW在动态织入的过程中提供了更细粒度的控制。使用Java（5+）的代理能使用一个叫“Vanilla”的AspectJ LTW，这需要在启动jvm的时候将某个JVM参数设置为开。这种JVM范围的设置在一些情况下或许不错，但通常情况下显得又些粗颗粒。而用Spring的LTW能让你在per-ClassLoader的基础上打开LTW，这显然更加细粒度并且对“单JVM多应用”的环境更具意义（例如在一个典型应用服务器环境中）。另外，在-javaagent:path/to/aspectjweaver.jar或者-javaagent:path/to/Spring-agent.jar。开发人员只需要简单修改应用上下文的一个或几个文件就能使用LTW，而不需要依靠哪些管理者部署配置。
+我们还是以之前的AOP实例为基础，如果想从动态代理的方式改成静态代理的方式需要做如下改动。
+（1）Spring全局配置文件的修改，加入LWT开关。
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;context:load-time-weaver /&gt;</span><br></pre></td></tr></table></figure>
+<pre><code>(2)加入aop.xml。在class目录下的META-INF（没有则自己建立）文件夹下建立aop.xml，内容如下：
+</code></pre><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE aspectj PUBLIC "-//AspectJ//DTD//EN" "http://www.eclipes.org/aspecjt/dtd/aspectj.dtd"&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">aspectj</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">weaver</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">include</span> <span class="attr">within</span>=<span class="string">"test.*"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">weaver</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">aspects</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aspect</span> <span class="attr">name</span>=<span class="string">"test.AspectJTest"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">aspects</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">aspectj</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--主要是告诉AspectJ需要对哪个包进行织入，并使用哪些增强器。--&gt;</span></span><br></pre></td></tr></table></figure>
+<pre><code>（3）加入启动参数。如果是Eclipse中启动需要加上启动参数， 
+</code></pre><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-javaagent:e:\org.springframework.instrument.jar</span><br></pre></td></tr></table></figure>
+<pre><code>结果跟动态AOP并无差别。静态代理主要是在虚拟机启动的时候通过改变目标对象字节码的方式来完成对目标对象的增强，它与动态代理相比具有更高的效率，因为动态代理调用的过程中，还需要一个动态创建代理类并对代理目标对象的步骤，而静态代理则是在启动时便完成了字节码增强当系统再次调用目标类时与调用正常的类并无差别，所以在效率上会相对高些。
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+  
+</div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://luyaoze.github.io/2018/04/01/Docker-Kubernetes集群-Skaffold快速迭代本地开发应用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -398,37 +609,37 @@
 <h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>要使用Skaffold最好是提前在我们本地安装一套单节点的kubernetes集群，比如minikube或者Docker for MAC/Windows的Edge版</p>
 <p>我的本地环境MacOS10.13.3+Docker-18.03.0-ce。</p>
 <h4 id="1-skaffold的安装（MAC版的，Linux版的大家请自行谷歌）"><a href="#1-skaffold的安装（MAC版的，Linux版的大家请自行谷歌）" class="headerlink" title="1.skaffold的安装（MAC版的，Linux版的大家请自行谷歌）"></a>1.skaffold的安装（MAC版的，Linux版的大家请自行谷歌）</h4><p>通过命令行工具，运行：</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -Lo skaffold https:<span class="regexp">//</span>storage.googleapis.com<span class="regexp">/skaffold/</span>releases<span class="regexp">/latest/</span>skaffold-darwin-amd64 &amp;&amp; chmod +x skaffold &amp;&amp; sudo mv skaffold <span class="regexp">/usr/</span>local<span class="regexp">/bin</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-darwin-amd64 &amp;&amp; chmod +x skaffold &amp;&amp; sudo mv skaffold /usr/local/bin</span><br></pre></td></tr></table></figure>
 <p>当然如果由于某些原因你不能访问上面的链接的话，则可以前往Skaffold的github release页面下载相应的安装包。</p>
 <h4 id="2-Kubernetes集群"><a href="#2-Kubernetes集群" class="headerlink" title="2.Kubernetes集群"></a>2.Kubernetes集群</h4><p>为了简单起见，我使用的是Docker for Mac（Edge）自带的单节点的Kubernetes集群，至于这个的安装，大家谷歌一下，安装的时候建议翻墙，我的MAC上使用的翻墙软件为VPN Plus，因为这个是免费的，而且相对比较稳定，不翻墙的话Kubernetes的有些镜像可能下载会失败。</p>
 <h4 id="3-kubectl"><a href="#3-kubectl" class="headerlink" title="3.kubectl"></a>3.kubectl</h4><p>要使用kubernetes那么肯定kubectl也是少不了的，在本地配置上你的目标群集的当前上下文进行开发，这个也是跟docker一起安装的。</p>
 <h4 id="4-Docker"><a href="#4-Docker" class="headerlink" title="4.Docker"></a>4.Docker</h4><p>这个不是今天的重点，自行谷歌。</p>
 <h3 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h3><p>我们可以在本地开发一个非常简单的应用程序，然后通过Skaffold来进行迭代开发，这里我们直接使用Skaffold的官方示例，首先clone代码：</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">https</span>://github.com/GoogleCloudPlatform/skaffold</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/GoogleCloudPlatform/skaffold</span><br></pre></td></tr></table></figure>
 <p>然后我们定位到examples/getting-started目录下去：</p>
-<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ cd skaffold/examples/getting-started                          </span><br><span class="line">$ tree                                                          </span><br><span class="line">.</span><br><span class="line"><span class="string">|____skaffold-gcb.yaml</span></span><br><span class="line"><span class="string">|____Dockerfile</span></span><br><span class="line"><span class="string">|____k8s-pod.yaml</span></span><br><span class="line"><span class="string">|____skaffold.yaml</span></span><br><span class="line"><span class="string">|____main.go</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ cd skaffold/examples/getting-started                          </span><br><span class="line">$ tree                                                          </span><br><span class="line">.</span><br><span class="line">|____skaffold-gcb.yaml</span><br><span class="line">|____Dockerfile</span><br><span class="line">|____k8s-pod.yaml</span><br><span class="line">|____skaffold.yaml</span><br><span class="line">|____main.go</span><br></pre></td></tr></table></figure>
 <p>该目录下面有一个非常简单的golang程序:（main.go）</p>
 <figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"Hello world!"</span>)</span><br><span class="line">		time.Sleep(time.Second * <span class="number">1</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>其中skaffold-gcb.yaml文件我们可以暂时忽略，这个文件是和google cloud结合使用的，我们可以看下skaffold.yaml文件内容，如下：</p>
-<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">apiVersion:</span> skaffold/v1alpha2</span><br><span class="line"><span class="symbol">kind:</span> Config</span><br><span class="line"><span class="symbol">build:</span></span><br><span class="line"><span class="symbol">  artifacts:</span></span><br><span class="line">  - imageName: gcr.io<span class="meta-keyword">/k8s-skaffold/</span>skaffold-example</span><br><span class="line"><span class="symbol">    workspace:</span> .</span><br><span class="line"><span class="symbol">  local:</span> &#123;&#125;</span><br><span class="line"><span class="symbol">deploy:</span></span><br><span class="line"><span class="symbol">  kubectl:</span></span><br><span class="line"><span class="symbol">    manifests:</span></span><br><span class="line">      - k8s-*</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: skaffold/v1alpha2</span><br><span class="line">kind: Config</span><br><span class="line">build:</span><br><span class="line">  artifacts:</span><br><span class="line">  - imageName: gcr.io/k8s-skaffold/skaffold-example</span><br><span class="line">    workspace: .</span><br><span class="line">  local: &#123;&#125;</span><br><span class="line">deploy:</span><br><span class="line">  kubectl:</span><br><span class="line">    manifests:</span><br><span class="line">      - k8s-*</span><br></pre></td></tr></table></figure>
 <p>然后我们可以看到k8s-pod.yaml文件，修改image的参数为IMAGE_NAME，这个地方Skaffold会自动帮我们替换成正在的镜像地址的，如下：</p>
-<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">apiVersion:</span> v1</span><br><span class="line"><span class="symbol">kind:</span> Pod</span><br><span class="line"><span class="symbol">metadata:</span></span><br><span class="line"><span class="symbol">  name:</span> getting-started</span><br><span class="line"><span class="symbol">spec:</span></span><br><span class="line"><span class="symbol">  containers:</span></span><br><span class="line">  - name: getting-started</span><br><span class="line"><span class="symbol">    image:</span> gcr.io<span class="meta-keyword">/k8s-skaffold/</span>skaffold-example</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: getting-started</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: getting-started</span><br><span class="line">    image: gcr.io/k8s-skaffold/skaffold-example</span><br></pre></td></tr></table></figure>
 <p>然后我们就可以在getting-started目录下面执行skaffold dev命令了：</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">skaffold dev                                           </span><br><span class="line">Starting build...</span><br><span class="line">Found [docker-<span class="keyword">for</span>-desktop] context, using local docker daemon.</span><br><span class="line">Sending build context <span class="keyword">to</span> Docker daemon  <span class="number">6.144</span>kB</span><br><span class="line">Step <span class="number">1</span>/<span class="number">5</span> : FROM golan<span class="variable">g:1</span>.<span class="number">9.4</span>-alpine3.<span class="number">7</span></span><br><span class="line"><span class="number">1.9</span>.<span class="number">4</span>-alpine3.<span class="number">7</span>: Pulling from library/golang</span><br><span class="line">ff3a5c916c92: Already <span class="built_in">exists</span></span><br><span class="line">f32d2ea73378: Already <span class="built_in">exists</span></span><br><span class="line"><span class="number">7</span>e338747c3c<span class="variable">a:</span> Already <span class="built_in">exists</span></span><br><span class="line"><span class="number">3</span>a75aa9cb0c3: Pulling fs layer</span><br><span class="line"><span class="number">7</span>a7cfbabfc25: Pulling fs layer</span><br><span class="line"><span class="number">43</span>b7df8cdce7: Pulling fs layer</span><br><span class="line"><span class="number">7</span>a7cfbabfc25: Download <span class="built_in">complete</span></span><br><span class="line"><span class="number">43</span>b7df8cdce7: Verifying Checksum</span><br><span class="line"><span class="number">43</span>b7df8cdce7: Download <span class="built_in">complete</span></span><br><span class="line"><span class="number">3</span>a75aa9cb0c3: Verifying Checksum</span><br><span class="line"><span class="number">3</span>a75aa9cb0c3: Download <span class="built_in">complete</span></span><br><span class="line"><span class="number">3</span>a75aa9cb0c3: Pull <span class="built_in">complete</span></span><br><span class="line"><span class="number">7</span>a7cfbabfc25: Pull <span class="built_in">complete</span></span><br><span class="line"><span class="number">43</span>b7df8cdce7: Pull <span class="built_in">complete</span></span><br><span class="line">Diges<span class="variable">t:</span> <span class="built_in">sha256</span>:<span class="number">566</span>ec2d92f3f2ac0a83b941bacff33a2d3a7d98eddcbc288ada912be969cd5aa</span><br><span class="line">Statu<span class="variable">s:</span> Downloaded newer image <span class="keyword">for</span> golan<span class="variable">g:1</span>.<span class="number">9.4</span>-alpine3.<span class="number">7</span></span><br><span class="line"> ---&gt; fb6e10bf973b</span><br><span class="line">Step <span class="number">2</span>/<span class="number">5</span> : WORKDIR /<span class="keyword">go</span>/src/github.<span class="keyword">com</span>/GoogleCloudPlatform/skaffold/examples/getting-started</span><br><span class="line"> ---&gt; <span class="number">8</span>f1eabcc41a2</span><br><span class="line">Step <span class="number">3</span>/<span class="number">5</span> : CMD [<span class="string">"./app"</span>]</span><br><span class="line"> ---&gt; Running in <span class="number">2</span>e3279a84ada</span><br><span class="line"> ---&gt; <span class="number">8</span>c65b0140915</span><br><span class="line">Step <span class="number">4</span>/<span class="number">5</span> : COPY main.<span class="keyword">go</span> .</span><br><span class="line"> ---&gt; <span class="number">420036</span>b19bd0</span><br><span class="line">Step <span class="number">5</span>/<span class="number">5</span> : RUN <span class="keyword">go</span> build -<span class="keyword">o</span> app main.<span class="keyword">go</span></span><br><span class="line"> ---&gt; Running in <span class="number">2</span>cd819ac2241</span><br><span class="line"> ---&gt; aec223791bb7</span><br><span class="line">Successfully built aec223791bb7</span><br><span class="line">Successfully tagged <span class="number">8</span>da0c4f31bfe882ce1117dda832e4f32:latest</span><br><span class="line">Successfully tagged gcr.io/k8s-skaffold/skaffold-example:aec223791bb75362e28fe3aeeac3c7ba9fdf80c0c34b5e8fd068157d8219c277</span><br><span class="line">Build <span class="built_in">complete</span> in <span class="number">1</span>m15.<span class="number">696492271</span>s</span><br><span class="line">Starting deploy...</span><br><span class="line">Deploying k8s-pod.yaml...</span><br><span class="line">Deploy <span class="built_in">complete</span> in <span class="number">329.744527</span>ms</span><br><span class="line">Watching <span class="keyword">for</span> <span class="keyword">changes</span>...</span><br><span class="line">[getting-started] Hello world!</span><br><span class="line">[getting-started] Hello world!</span><br><span class="line">[getting-started] Hello world!</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">skaffold dev                                           </span><br><span class="line">Starting build...</span><br><span class="line">Found [docker-for-desktop] context, using local docker daemon.</span><br><span class="line">Sending build context to Docker daemon  6.144kB</span><br><span class="line">Step 1/5 : FROM golang:1.9.4-alpine3.7</span><br><span class="line">1.9.4-alpine3.7: Pulling from library/golang</span><br><span class="line">ff3a5c916c92: Already exists</span><br><span class="line">f32d2ea73378: Already exists</span><br><span class="line">7e338747c3ca: Already exists</span><br><span class="line">3a75aa9cb0c3: Pulling fs layer</span><br><span class="line">7a7cfbabfc25: Pulling fs layer</span><br><span class="line">43b7df8cdce7: Pulling fs layer</span><br><span class="line">7a7cfbabfc25: Download complete</span><br><span class="line">43b7df8cdce7: Verifying Checksum</span><br><span class="line">43b7df8cdce7: Download complete</span><br><span class="line">3a75aa9cb0c3: Verifying Checksum</span><br><span class="line">3a75aa9cb0c3: Download complete</span><br><span class="line">3a75aa9cb0c3: Pull complete</span><br><span class="line">7a7cfbabfc25: Pull complete</span><br><span class="line">43b7df8cdce7: Pull complete</span><br><span class="line">Digest: sha256:566ec2d92f3f2ac0a83b941bacff33a2d3a7d98eddcbc288ada912be969cd5aa</span><br><span class="line">Status: Downloaded newer image for golang:1.9.4-alpine3.7</span><br><span class="line"> ---&gt; fb6e10bf973b</span><br><span class="line">Step 2/5 : WORKDIR /go/src/github.com/GoogleCloudPlatform/skaffold/examples/getting-started</span><br><span class="line"> ---&gt; 8f1eabcc41a2</span><br><span class="line">Step 3/5 : CMD [&quot;./app&quot;]</span><br><span class="line"> ---&gt; Running in 2e3279a84ada</span><br><span class="line"> ---&gt; 8c65b0140915</span><br><span class="line">Step 4/5 : COPY main.go .</span><br><span class="line"> ---&gt; 420036b19bd0</span><br><span class="line">Step 5/5 : RUN go build -o app main.go</span><br><span class="line"> ---&gt; Running in 2cd819ac2241</span><br><span class="line"> ---&gt; aec223791bb7</span><br><span class="line">Successfully built aec223791bb7</span><br><span class="line">Successfully tagged 8da0c4f31bfe882ce1117dda832e4f32:latest</span><br><span class="line">Successfully tagged gcr.io/k8s-skaffold/skaffold-example:aec223791bb75362e28fe3aeeac3c7ba9fdf80c0c34b5e8fd068157d8219c277</span><br><span class="line">Build complete in 1m15.696492271s</span><br><span class="line">Starting deploy...</span><br><span class="line">Deploying k8s-pod.yaml...</span><br><span class="line">Deploy complete in 329.744527ms</span><br><span class="line">Watching for changes...</span><br><span class="line">[getting-started] Hello world!</span><br><span class="line">[getting-started] Hello world!</span><br><span class="line">[getting-started] Hello world!</span><br></pre></td></tr></table></figure>
 <p>由于没有安装过golang相关的苦，所以有可能会失败，失败之后退出之后重新执行skaffold dev命令就好了，如果尝试多次还不好使，建议使用flowVPN这个翻墙插件，网速让我直接开始怀疑人生。</p>
 <p>Skaffold已经帮我们做了很多事情了：</p>
 <p>用本地源代码构建 Docker 镜像<br>用它的sha256值作为镜像的标签<br>设置skaffold.yaml文件中定义的 kubernetes manifests 的镜像地址<br>用kubectl apply -f命令来部署 kubernetes 应用<br>部署完成后，我们可以看到 pod 打印出了如下的信息：</p>
-<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[getting-started]</span> Hello world!</span><br><span class="line"><span class="string">[getting-started]</span> Hello world!</span><br><span class="line"><span class="string">[getting-started]</span> Hello world!</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[getting-started] Hello world!</span><br><span class="line">[getting-started] Hello world!</span><br><span class="line">[getting-started] Hello world!</span><br></pre></td></tr></table></figure>
 <p>同样的，我们可以通过kubectl工具查看当前部署的 POD：</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods                                            </span><br><span class="line">NAME              READY     STATUS    RESTARTS   AGE</span><br><span class="line">getting-started   <span class="number">1</span>/<span class="number">1</span>       Running   <span class="number">0</span>          <span class="number">1</span>m</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods                                            </span><br><span class="line">NAME              READY     STATUS    RESTARTS   AGE</span><br><span class="line">getting-started   1/1       Running   0          1m</span><br></pre></td></tr></table></figure>
 <p>然后我们可以打印出上面的 POD 的详细信息</p>
-<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pod getting-started  -o yaml</span><br><span class="line">...</span><br><span class="line"><span class="symbol">spec:</span></span><br><span class="line"><span class="symbol">  containers:</span></span><br><span class="line">  - image: gcr.io<span class="meta-keyword">/k8s-skaffold/</span>skaffold-example:<span class="number">811875</span>a31d122f07a30dfca0c0058eb44b2c7100b2794a94f9fd52e639e97fff</span><br><span class="line"><span class="symbol">    imagePullPolicy:</span> IfNotPresent</span><br><span class="line"><span class="symbol">    name:</span> getting-started</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pod getting-started  -o yaml</span><br><span class="line">...</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - image: gcr.io/k8s-skaffold/skaffold-example:811875a31d122f07a30dfca0c0058eb44b2c7100b2794a94f9fd52e639e97fff</span><br><span class="line">    imagePullPolicy: IfNotPresent</span><br><span class="line">    name: getting-started</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <p>我们可以看到我们部署的 POD 的镜像地址，和我们已有的 docker 镜像地址和标签是一样的：</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker images |grep skaffold                                </span><br><span class="line">gcr.io/k8s-skaffold/skaffold-example                     <span class="number">811875</span>a31d122f07a30dfca0c0058eb44b2c7100b2794a94f9fd52e639e97fff   <span class="number">811875</span>a31d12        About a minute ago   <span class="number">271</span>MB</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker images |grep skaffold                                </span><br><span class="line">gcr.io/k8s-skaffold/skaffold-example                     811875a31d122f07a30dfca0c0058eb44b2c7100b2794a94f9fd52e639e97fff   811875a31d12        About a minute ago   271MB</span><br></pre></td></tr></table></figure>
 <p>现在，我们来更改下我们的main.go文件：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"Hello lyz!"</span>)</span><br><span class="line">		time.Sleep(time.Second * <span class="number">1</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">	&quot;time&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	for &#123;</span><br><span class="line">		fmt.Println(&quot;Hello lyz!&quot;)</span><br><span class="line">		time.Sleep(time.Second * 1)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>当我们保存该文件后，观察 POD 的输出信息：</p>
-<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Starting build...</span><br><span class="line">Found [docker-<span class="keyword">for</span>-desktop] context, using local docker daemon.</span><br><span class="line">Sending build context to Docker daemon  <span class="number">6.144</span>kB</span><br><span class="line">Step <span class="number">1</span>/<span class="number">5</span> : <span class="type">FROM</span> golang:<span class="number">1.9</span>.<span class="number">4</span>-alpine3.<span class="number">7</span></span><br><span class="line"> <span class="comment">---&gt; fb6e10bf973b</span></span><br><span class="line">Step <span class="number">2</span>/<span class="number">5</span> : <span class="type">WORKDIR</span> /go/src/github.com/GoogleCloudPlatform/skaffold/examples/getting-started</span><br><span class="line"> <span class="comment">---&gt; Using cache</span></span><br><span class="line"> <span class="comment">---&gt; 8f1eabcc41a2</span></span><br><span class="line">Step <span class="number">3</span>/<span class="number">5</span> : <span class="type">CMD</span> [<span class="string">"./app"</span>]</span><br><span class="line"> <span class="comment">---&gt; Using cache</span></span><br><span class="line"> <span class="comment">---&gt; 8c65b0140915</span></span><br><span class="line">Step <span class="number">4</span>/<span class="number">5</span> : <span class="type">COPY</span> main.go .</span><br><span class="line"> <span class="comment">---&gt; 9fc3e7aaff40</span></span><br><span class="line">Step <span class="number">5</span>/<span class="number">5</span> : <span class="type">RUN</span> go build -o app main.go</span><br><span class="line"> <span class="comment">---&gt; Running in 508b97f29e88</span></span><br><span class="line"> <span class="comment">---&gt; 811875a31d12</span></span><br><span class="line">Successfully built <span class="number">811875</span>a31d12</span><br><span class="line">Successfully <span class="keyword">tagged</span> <span class="number">7</span>c393e3a0367411d5e7bec05ae632eb5:latest</span><br><span class="line">Successfully <span class="keyword">tagged</span> gcr.io/k8s-skaffold/skaffold-example:<span class="number">811875</span>a31d122f07a30dfca0c0058eb44b2c7100b2794a94f9fd52e639e97fff</span><br><span class="line">Build complete <span class="keyword">in</span> <span class="number">1.706332689</span>s</span><br><span class="line">Starting deploy...</span><br><span class="line">Deploying k8s-pod.yaml...</span><br><span class="line">Deploy complete <span class="keyword">in</span> <span class="number">253.419235</span>ms</span><br><span class="line">Watching <span class="keyword">for</span> changes...</span><br><span class="line">[getting-started] Hello lyz!</span><br><span class="line">[getting-started] Hello lyz!</span><br><span class="line">[getting-started] Hello lyz!</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Starting build...</span><br><span class="line">Found [docker-for-desktop] context, using local docker daemon.</span><br><span class="line">Sending build context to Docker daemon  6.144kB</span><br><span class="line">Step 1/5 : FROM golang:1.9.4-alpine3.7</span><br><span class="line"> ---&gt; fb6e10bf973b</span><br><span class="line">Step 2/5 : WORKDIR /go/src/github.com/GoogleCloudPlatform/skaffold/examples/getting-started</span><br><span class="line"> ---&gt; Using cache</span><br><span class="line"> ---&gt; 8f1eabcc41a2</span><br><span class="line">Step 3/5 : CMD [&quot;./app&quot;]</span><br><span class="line"> ---&gt; Using cache</span><br><span class="line"> ---&gt; 8c65b0140915</span><br><span class="line">Step 4/5 : COPY main.go .</span><br><span class="line"> ---&gt; 9fc3e7aaff40</span><br><span class="line">Step 5/5 : RUN go build -o app main.go</span><br><span class="line"> ---&gt; Running in 508b97f29e88</span><br><span class="line"> ---&gt; 811875a31d12</span><br><span class="line">Successfully built 811875a31d12</span><br><span class="line">Successfully tagged 7c393e3a0367411d5e7bec05ae632eb5:latest</span><br><span class="line">Successfully tagged gcr.io/k8s-skaffold/skaffold-example:811875a31d122f07a30dfca0c0058eb44b2c7100b2794a94f9fd52e639e97fff</span><br><span class="line">Build complete in 1.706332689s</span><br><span class="line">Starting deploy...</span><br><span class="line">Deploying k8s-pod.yaml...</span><br><span class="line">Deploy complete in 253.419235ms</span><br><span class="line">Watching for changes...</span><br><span class="line">[getting-started] Hello lyz!</span><br><span class="line">[getting-started] Hello lyz!</span><br><span class="line">[getting-started] Hello lyz!</span><br></pre></td></tr></table></figure>
 <p>修改完文件保存之后，我们没有做任何操作，就看见我们的修改结果，同样我们可以用上面的样式去查看下 POD 里面的镜像标签是已经更改过了。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>我这里为了说明Skaffold的使用，可能描述显得有点拖沓，但是当你自己去使用的时候，就完全能够感受到Skaffold为开发kubernetes应用带来的方便高效，大大的提高了我们的生产力。 另外在kubernetes开发自动化工具领域，还有一些其他的选择，比如Azure的Draft、Datawire 的 Forge 以及 Weavework 的 Flux，大家都可以去使用一下，其他微软的Draft是和Helm结合得非常好，不过Skaffold当然也是支持的，工具始终是工具，能为我们提升效率的就是好工具，不过从开源的角度来说，信 Google 准没错。</p>
 <p>是不是感觉好神奇的样子，容器跟k8s的自动化让我有点惊讶，虽然对k8s还不是很了解，但是通过今天的操作让我对它充满了兴趣，接下来再慢慢深入。如此自动化的运维开发，相信对于开发和测试的效率会有一个质的提升，真心希望公司也能尽快投入到k8s的环保～～～</p>
@@ -1203,10 +1414,10 @@
 <h2 id="DefaultListableBeanFactory"><a href="#DefaultListableBeanFactory" class="headerlink" title="DefaultListableBeanFactory"></a>DefaultListableBeanFactory</h2><ul>
 <li><strong>DefaultListableBeanFactory</strong>是spring整个bean加载的核心部分，是spring注册及加载bean的默认实现。XmlBeanFactory继承了自DefaultListableBeanFactory，不同的就是XmlBeanFactory中使用了自定义的XmlBeanDefinitionReader，实现了自定义的BeanDefinitionReader读取。</li>
 <li><p><strong>AliasRegistry</strong> - 定义对alias的简单的增删改操作。spring-core模块下的接口.</p>
-<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void registerAlias(<span class="keyword">String</span> <span class="keyword">name</span>, <span class="keyword">String</span> <span class="keyword">alias</span>);</span><br><span class="line">void removeAlias(<span class="keyword">String</span> <span class="keyword">alias</span>);</span><br><span class="line">boolean isAlias(<span class="keyword">String</span> <span class="keyword">name</span>);</span><br><span class="line"><span class="keyword">String</span>[] getAliases(<span class="keyword">String</span> <span class="keyword">name</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void registerAlias(String name, String alias);</span><br><span class="line">void removeAlias(String alias);</span><br><span class="line">boolean isAlias(String name);</span><br><span class="line">String[] getAliases(String name);</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><strong>SimpleAliasRegistry</strong> - 使用map作为缓存，对AliasRegistry接口进行实现。</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private <span class="keyword">final</span> <span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">String</span>&gt; aliasMap = <span class="keyword">new</span> ConcurrentHashMap(<span class="number">16</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private final Map&lt;String, String&gt; aliasMap = new ConcurrentHashMap(16);</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <ul>
@@ -1310,7 +1521,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1321,7 +1532,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1332,7 +1543,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

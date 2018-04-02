@@ -372,10 +372,10 @@
 <h2 id="DefaultListableBeanFactory"><a href="#DefaultListableBeanFactory" class="headerlink" title="DefaultListableBeanFactory"></a>DefaultListableBeanFactory</h2><ul>
 <li><strong>DefaultListableBeanFactory</strong>是spring整个bean加载的核心部分，是spring注册及加载bean的默认实现。XmlBeanFactory继承了自DefaultListableBeanFactory，不同的就是XmlBeanFactory中使用了自定义的XmlBeanDefinitionReader，实现了自定义的BeanDefinitionReader读取。</li>
 <li><p><strong>AliasRegistry</strong> - 定义对alias的简单的增删改操作。spring-core模块下的接口.</p>
-<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void registerAlias(<span class="keyword">String</span> <span class="keyword">name</span>, <span class="keyword">String</span> <span class="keyword">alias</span>);</span><br><span class="line">void removeAlias(<span class="keyword">String</span> <span class="keyword">alias</span>);</span><br><span class="line">boolean isAlias(<span class="keyword">String</span> <span class="keyword">name</span>);</span><br><span class="line"><span class="keyword">String</span>[] getAliases(<span class="keyword">String</span> <span class="keyword">name</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void registerAlias(String name, String alias);</span><br><span class="line">void removeAlias(String alias);</span><br><span class="line">boolean isAlias(String name);</span><br><span class="line">String[] getAliases(String name);</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><strong>SimpleAliasRegistry</strong> - 使用map作为缓存，对AliasRegistry接口进行实现。</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private <span class="keyword">final</span> <span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">String</span>&gt; aliasMap = <span class="keyword">new</span> ConcurrentHashMap(<span class="number">16</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private final Map&lt;String, String&gt; aliasMap = new ConcurrentHashMap(16);</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <ul>
@@ -587,7 +587,7 @@ var jiathis_config={
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -598,7 +598,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -609,7 +609,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
