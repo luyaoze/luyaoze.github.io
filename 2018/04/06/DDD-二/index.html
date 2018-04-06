@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="DDD领域驱动领域驱动设计（DDD）作为一种软件开发方法，它可以帮助我们设计高质量的软件模型。在正确实现的情况下，我们通过DDD完成的设计恰恰就是软件的工作方式。  什么是领域模型？   领域模型是关于某个特定业务领域的软件模型。通常，领域模型通过对象模型来实现，这些对象同时包含了数据和行为，并且表达了准确的业务含义。  处理领域复杂性   在使用DDD时，我们首先希望将它应用在最重要的业务场景下">
+<meta name="description" content="DDD(二) 理解限界上下文   限界上下文是一个显式边界，领域模型便存在于边界之内。在边界内，通用语言的所有属于和词组都有特定的含义，而模型需要准备地反应通用语言。  例如账户（Account）模型在银行上下文（Banking Context）和文学上下文（Literary Context）中是完全不同的。在银行上下文，账户表示一个客户在银行存款的状态，并记录每次交易的信息。而在文学上下文中，账">
 <meta name="keywords" content="DDD">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DDD领域驱动">
-<meta property="og:url" content="http://luyaoze.github.io/2018/04/05/DDD领域驱动/index.html">
+<meta property="og:title" content="DDD(二)">
+<meta property="og:url" content="http://luyaoze.github.io/2018/04/06/DDD-二/index.html">
 <meta property="og:site_name" content="lyz的博客">
-<meta property="og:description" content="DDD领域驱动领域驱动设计（DDD）作为一种软件开发方法，它可以帮助我们设计高质量的软件模型。在正确实现的情况下，我们通过DDD完成的设计恰恰就是软件的工作方式。  什么是领域模型？   领域模型是关于某个特定业务领域的软件模型。通常，领域模型通过对象模型来实现，这些对象同时包含了数据和行为，并且表达了准确的业务含义。  处理领域复杂性   在使用DDD时，我们首先希望将它应用在最重要的业务场景下">
+<meta property="og:description" content="DDD(二) 理解限界上下文   限界上下文是一个显式边界，领域模型便存在于边界之内。在边界内，通用语言的所有属于和词组都有特定的含义，而模型需要准备地反应通用语言。  例如账户（Account）模型在银行上下文（Banking Context）和文学上下文（Literary Context）中是完全不同的。在银行上下文，账户表示一个客户在银行存款的状态，并记录每次交易的信息。而在文学上下文中，账">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-05T16:56:25.204Z">
+<meta property="og:updated_time" content="2018-04-06T17:44:43.990Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DDD领域驱动">
-<meta name="twitter:description" content="DDD领域驱动领域驱动设计（DDD）作为一种软件开发方法，它可以帮助我们设计高质量的软件模型。在正确实现的情况下，我们通过DDD完成的设计恰恰就是软件的工作方式。  什么是领域模型？   领域模型是关于某个特定业务领域的软件模型。通常，领域模型通过对象模型来实现，这些对象同时包含了数据和行为，并且表达了准确的业务含义。  处理领域复杂性   在使用DDD时，我们首先希望将它应用在最重要的业务场景下">
+<meta name="twitter:title" content="DDD(二)">
+<meta name="twitter:description" content="DDD(二) 理解限界上下文   限界上下文是一个显式边界，领域模型便存在于边界之内。在边界内，通用语言的所有属于和词组都有特定的含义，而模型需要准备地反应通用语言。  例如账户（Account）模型在银行上下文（Banking Context）和文学上下文（Literary Context）中是完全不同的。在银行上下文，账户表示一个客户在银行存款的状态，并记录每次交易的信息。而在文学上下文中，账">
 
 
 
@@ -136,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://luyaoze.github.io/2018/04/05/DDD领域驱动/"/>
+  <link rel="canonical" href="http://luyaoze.github.io/2018/04/06/DDD-二/"/>
 
 
 
 
 
-  <title>DDD领域驱动 | lyz的博客</title>
+  <title>DDD(二) | lyz的博客</title>
   
 
 
@@ -269,7 +269,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://luyaoze.github.io/2018/04/05/DDD领域驱动/">
+    <link itemprop="mainEntityOfPage" href="http://luyaoze.github.io/2018/04/06/DDD-二/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="卢耀泽">
@@ -286,7 +286,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">DDD领域驱动</h1>
+          <h1 class="post-title" itemprop="name headline">DDD(二)</h1>
         
 
         <div class="post-meta">
@@ -298,8 +298,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-05T21:45:24+08:00">
-                2018-04-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-06T22:01:19+08:00">
+                2018-04-06
               </time>
             
 
@@ -350,8 +350,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/04/05/DDD领域驱动/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/04/05/DDD领域驱动/" itemprop="commentsCount"></span>
+                <a href="/2018/04/06/DDD-二/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/04/06/DDD-二/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -379,41 +379,47 @@
       
 
       
-        <h1 id="DDD领域驱动"><a href="#DDD领域驱动" class="headerlink" title="DDD领域驱动"></a>DDD领域驱动</h1><p>领域驱动设计（DDD）作为一种软件开发方法，它可以帮助我们设计高质量的软件模型。在正确实现的情况下，我们通过DDD完成的设计恰恰就是软件的工作方式。</p>
+        <h1 id="DDD-二"><a href="#DDD-二" class="headerlink" title="DDD(二)"></a>DDD(二)</h1><ul>
+<li><p>理解限界上下文</p>
+<p>  限界上下文是一个显式边界，领域模型便存在于边界之内。在边界内，通用语言的所有属于和词组都有特定的含义，而模型需要准备地反应通用语言。<br>  例如账户（Account）模型在银行上下文（Banking Context）和文学上下文（Literary Context）中是完全不同的。在银行上下文，账户表示一个客户在银行存款的状态，并记录每次交易的信息。而在文学上下文中，账户表示文字记录的在一段时间之内发生的一系列事件。<br>  所以说上下文才是王道，特别是在实施DDD的时候。<br>  当需要集成时，我们必须在不同的限界上下文之间进行概念映射。在DDD中，这可能是复杂的，因此我们应该特别留意。在上下文边界之外，我们通常不会使用该上下文之内的对象实例，但是不同上下文中彼此关联的对象可能共享一些状态。<br>  再看另一个例子，该例中同一个领域的不同限界上下文使用了相同的概念名。考虑一个图书出版机构，它需要处理图书生命周期的不同阶段。粗略地讲，我们可以认为这些不同的阶段对应于以下不同的上下文环境：</p>
 <ul>
-<li><p>什么是领域模型？</p>
-<p>  领域模型是关于某个特定业务领域的软件模型。通常，领域模型通过对象模型来实现，这些对象同时包含了数据和行为，并且表达了准确的业务含义。</p>
-</li>
-<li><p>处理领域复杂性</p>
-<p>  在使用DDD时，我们首先希望将它应用在最重要的业务场景下。对于那些可以轻易替换的软件来说，你是不会有所投入的。相反，值得你投入的是那些重要的、复杂的东西，因为这些东西将为你带来可观的回报。正因如此，我们将这样的模型命名为核心域（Core Domain),而那些相对次要的称为支撑子域（Supporting Subdomain）。那么现在，我们需要搞明白的是，“复杂”到底是什么意思？</p>
-<p>  DDD的作用是简化，而不是复杂化。<br>  在使用DDD时，我们应该采用最简单的方式对复杂领域进行建模，而不是使问题变得更加复杂。</p>
-<p>  不同的业务领域对于复杂的定义是不一样的。另外，不同的公司所面临的挑战是不一样的；成熟度不一样；软件开发能力也不一样。因此，与其去定义什么是复杂的，还不如定义什么是重要的。这时，你的团队和管理层应该做出决定：你们开发的软件系统是否值得做出DDD投入。</p>
-</li>
-<li><p>贫血领域对象</p>
-<p>  领域对象当中只有getter和setter方法，并且几乎没有业务逻辑。<br>  贫血领域对象是不好的，因为你花了很大的成本来开发领域对象，但是从中获益甚少。比如，由于存在对象-关系阻抗失配，开发者需要将很多时间花在对象和数据存储之间的映射上。这样的代价太大，而受益太小。我得说，你所说的领域对象根本就不是领域对象，而只是将关系型数据库中的模型映射到对象上而已。这样的领域对象更像是活动记录，此时你可以对架构做个简化，然后使用事物脚本进行开发。<br>  贫血领域对象反应了一种自然的过程式的编码风格，但我并不认为这是首要原因。我们很多开发者都是学者示例代码做开发的这并不是什么坏事，只要示例代码本身是好的。然而，通常情况是，实例代码只是用尽可能简单的方式来展示某个特定的概念或者API特性，而并不是要强调遵循好多的设计原则。一些极度简化的示例代码总是包含了大量的getter和setter，于是这些getter和setter随着示例代码每天被程序员们原封不动的来回复制。</p>
-</li>
-</ul>
-<h2 id="如何DDD"><a href="#如何DDD" class="headerlink" title="如何DDD"></a>如何DDD</h2><ul>
-<li><p>通用语言</p>
-<p>  通用语言是团队共享的语言。领域专家和开发者使用的相同的语言进行交流。事实上，团队中每个人都是用相同的通用语言。不管你在团队中的角色如何，只要你是团队的一员，你都将使用通用语言。<br>  使用DDD的业务价值<br>  （1）你获得了一个非常有用的领域模型<br>  （2）你的业务得到了更准确的定义和理解<br>  （3）领域专家可以为软件设计做出贡献<br>  （4）更好的用户体验<br>  （5）清晰的模型边界<br>  （6）更好的企业架构<br>  （7）敏捷、迭代和持续建模<br>  （8）使用战略和战术新工具</p>
+<li>概念设计，计划出书</li>
+<li>联系作者，签订合同</li>
+<li>管理图书的编辑过程</li>
+<li>设计图书布局，包括插图</li>
+<li>将图书翻译成其它语言</li>
+<li>出版纸质或电子版图书</li>
+<li>市场营销</li>
+<li>将图书卖给销售商或者直接卖给读者</li>
+<li><p>将图书发送给销售商或读者</p>
+<p>在以上所有阶段中，我们可以用一个单一的概念对图书建模吗？显然不行。在每个阶段中，“图书”都有不同的定义。一本书只有在和作者签订了合同之后才能拥有书名，而书名可能在编辑过程进行修改。在编辑过程中，图书包含了一系列的稿件，其中包括注视和较正等，之后会有一份最终稿件。页面布局由专门的图形设计师完成。图书印刷方使用页面布局和封面版式印制图书。市场营销员不需要编辑稿件或图书印制成品，他们可能只需要图书的简介即可。对于如数的售后物流吗，我们需要的是图书的标识码、物流目的地、数目、尺寸和重量等。<br>想象一下，如果我们使用一个单一模型来处理所有这些阶段会发生什么？概念混淆、意见分歧和争论是不可避免的，我们所交付的软件也没有多大价值。即便有时我们可能会得到一个正确的公共模型，但这种模型并不具有持久性。<br>为了解决这个问题，我们应该为每个阶段创建个字的限界上下文，在每个限界上下文中，都存在某种类型的图书（Book）。在几乎所有的上下文中，不同类型的图书对象将共享一个身份标识（identity），这个标识可能是在概念设计阶段创建的。然而，不同上下文中的图书模型确实不同的。当某个限界上下文的团队说到图书时，该“图书”正好能表示该上下文所需要的意思。如此这般，我们根据不同的需求很自然地创建了不同类型的图书，但这并不表示这种建模过程就是可以轻易达到的。不管如何，在使用显式限界上下文的情况下，我们可以定期地、增量式的交付软件，同时所交付的软件又能满足特定的业务需求。</p>
 </li>
 </ul>
-<p>直接上代码，使用属性访问：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BacklogItem</span> <span class="keyword">extends</span> <span class="title">Entity</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> SprintId sprintId;</span><br><span class="line">    <span class="keyword">private</span> BacklogItemStatustype status;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">//省略getter和setter方法</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>service代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//通过service设置sprintId和status将一个BacklogItem提交到Sprint中</span></span><br><span class="line">backlogItem.setSprintId(sprintId);</span><br><span class="line">backlogItem.setStatus(BacklogItemStatusType.COMMITTED);</span><br></pre></td></tr></table></figure>
-<p>使用领域对象的行为，这种行为表达出了领域中的通用语言：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BacklogItem</span> <span class="keyword">extends</span> <span class="title">Entity</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> SprintId sprintId;</span><br><span class="line">    <span class="keyword">private</span> BacklogItemStatustype status;</span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">commitTo</span><span class="params">(Sprint aSprint)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="keyword">this</span>.isSchecduledForRelease())&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"状态异常"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(!<span class="keyword">this</span>.isCommittedToSprint())&#123;</span><br><span class="line">            <span class="keyword">if</span>(!aSprint.sprintId().equals(<span class="keyword">this</span>.sprintId()))</span><br><span class="line">                <span class="keyword">this</span>.uncommitformSprint();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">this</span>.elevateStatusWith(BacklogItemStatus.COMMITED);</span><br><span class="line">        <span class="keyword">this</span>.setSprintId(aSprint.sprintId());</span><br><span class="line">        DomainEventPublisher</span><br><span class="line">                            .instance()</span><br><span class="line">                            .publish(<span class="keyword">new</span> BacklogItemCommitted(</span><br><span class="line">                                    <span class="keyword">this</span>.tenant(),</span><br><span class="line">                                    <span class="keyword">this</span>.backlogItemId(),</span><br><span class="line">                                    <span class="keyword">this</span>.sprintId()));</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>此时service代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">backlogItem.commitTo(sprint);</span><br></pre></td></tr></table></figure>
-<pre><code>第一个例子采用是以数据为中心的方式，此时客户端代码必须知道如何正确地将一个待定项提交到冲刺中。这样的模型是不能称为领域模型的。如果客户端代码错误地修改了sprintId，而没有修改status会发生什么呢？或者如果在将来有另外一个属性需要设置值又该怎么办呢？我们需要认真分析客户代码来完成从客户数据到BacklogItem属性的映射。这种方法同时也暴露了BacklogItem的数据结构，并且将关注点集中在数据属性上，而不是对象行为。
-第二个例子，它将行为暴露给客户，行为方法的名字很清楚地表明了业务含义。客户代码并不需要知道提交BacklogItem的细节。实现代码所表达的逻辑恰好能够描述业务行为。我们很容易地添加了几行代码，以确保在发布计划之外的待定项是不能被提交的。很明显，在第二个例子中，我们对BacklogItem有了更多的思考。
-</code></pre><ul>
-<li><p>领域</p>
-<p>  领域（Domain）即是一个组织所做的事情以及其中所包含的一切。商业机构通常会确定一个市场，然后在这个市场中销售产品和服务。每个组织都有它自己的业务范围和做事方式。这个业务范围以及在其中所进行的活动便是领域。当你为某个组织开发软件的时，你面对的便是这个组织的领域。这个领域对于你来说应该是明晰的，以为你在这个领域中工作。<br>  有一点需要注意的是，“领域”这个词可能承载了太多含义。领域既可以表示整个业务系统，也可以表示其中某个核心领域或者支撑子域。<br>  由于“领域模型”包含了“领域”这个词，我们可能会认为应该为整个业务系统创建一个单一的、内聚的、全功能式的模型。然而，这并不是我们使用DDD的目标。正好相反，在DDD中，一个领域被分为若干子域，领域模型在限界上下文中完成开发。事实上，在开发一个领域模型时，我们关注的通常只是这个业务系统的某个方面。试图创建一个全功能的领域模型好似非常困难的，并且容易导致失败。既然领域模型不能包含整个业务系统，我们应该如何来划分领域模型呢？那就时将这些功能分开对待。<br>  子域并不是一定要做得很大，并且包含很多功能。有时，子域可以简单到只包含一套算法，这套算法可能对于业务系统来说非常重要，但是并不包含在核心领域之中。在正确实施DDD的情况下，这种简单的子域可以以模块的形式从核心域中分离出来，而不需要包含在笨重的子系统组件中。</p>
 </li>
 </ul>
-<p>未完待续。。。</p>
+<h2 id="限界上下文不仅仅只是包含模型"><a href="#限界上下文不仅仅只是包含模型" class="headerlink" title="限界上下文不仅仅只是包含模型"></a>限界上下文不仅仅只是包含模型</h2><p>一个限界上下文并不是只包含模型领域。诚然，模型时限界上下文的主要“公民”。但是，限界上下文并不局限于容纳模型，它通常标定了一个系统、一个应用程序或者一种业务服务。有时，限界上下文所包含的内容可能比较少，比如，一个通用子域便可以只包含领域模型</p>
+<ul>
+<li><p>限界上下文的大小</p>
+<p>  限界上下文中可以包含多少领域模型中的基础部件呢，比如模块、聚合、领域事件和领域服务等？这好像是在问“一个字符串应该有多长？”一样。限界上下文应该足够大，以便能够表达它所对应的整套通用语言。<br>  核心领域之外的概念不应该包含在限界上下文中。如果一个概念不属于你的通用语言，那么一开始你就不应该将其引入到模型中。此外，如果有外部概念“偷偷潜入”了你的限界上下文，你需要将其清除，他们可能属于另外的支撑子域或者通用子域，或者根本就不属于某个领域模型。<br>  如果对限界上下文的限制过于严格，那么我们可能丢失一些上下文概念。相反，如果向模型中添加过多的概念，我们可能搞不清楚哪些概念是重要的。那么我们的目标是什么呢？如果我们的模型是音乐，那么它应该表现出的是完整性、纯洁性、力量、优雅和美。其中的“音符”–模块、聚合、事件和服务–的数量正好是设计所要求的那么多。模型的“听众”不会问及到像“为什么中间会有一些奇怪的音符？”这样的问题。同时，他们也不会因为丢失了某些“音符”而感到不解。</p>
+</li>
+</ul>
+<h2 id="上下文映射图"><a href="#上下文映射图" class="headerlink" title="上下文映射图"></a>上下文映射图</h2><p>一个项目的上下文映射图可以用两种方式来表示。比较容易的一种是画一个简单的框图来表示两个或多个限界上下文之间的映射关系。该框图表示了不同的限界上下文在解决方案空间中是如何通过集成相互关联的。另一种更详细的方式是通过限界上下文集成的源代码实现来表示。<br>在开始采用DDD时，首先你应该为你当前的项目绘制一个上下文映射图，其中应该包含你项目中当前的限界上下文和他们之间的集成关系。</p>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><p>DDD的一大好处便是它并不需要使用特定的架构。由于核心域位于界限上下文中，我们可以在整个系统中使用多种风格的架构。有些架构包围着领域模型，能够全局性地影响系统，而有些架构则满足了某些特定的需求。我们的目标时选择适合于自己的架构和架构模式。<br>在选择架构风格和架构模式时，我们应该将软件质量考虑在内，而同时，避免滥用架构风格和架构模式也是重要的。质量驱动的架构选择是种风险驱动方式，即我们采用的架构是用来减少失败风险的美，而不是增加失败风险。因此，我们必须对每种架构做出正确的评估。<br>对架构风格和模式的选择受到功能需求的限制，比如用例或用户故事。换句话说，在没有功能需求的情况下，我们是不能对软件质量做出评判的美，亦不能做出正确的架构选择。这也说明用例驱动架构在当今的软件开发中依然适用。<br>当然，分层架构的原则依然可以作为我们的决策指导，但是我们不会止步不前，我们将在必要时采用更现代的架构和模式，这也意味着DDD的用途是非常广阔的。<br>分层架构的一个重要原则是：每层只能与位于其下方的层发生耦合。分层架构也分为几种：在严格分层架构中，某层只能与直接位于其下方的层发生耦合；而松散分层架构则允许任意上方层与任意下方层发生耦合。由于用户界面层和应用服务通常需要与基础设施打交道，许多系统都是基于松散分层架构的。<br>事实上，较低层也是可以和较高层发生耦合的，但这只是局限于采用观察者模式或者调停者模式的情况。较低层是绝对不能访问较高层的。例如，在使用调停者模式时，较高层可能实现了较低层定义的接口，然后将实现对象对象作为参数传递到较低层。当较低层调用该实现时，它并不知道实现出自何处。<br>用户界面只用于处理用户显示和用户请求，它不应该包括领域或业务逻辑。有人可能会认为，既然用户界面需要对用户输入进行验证，那么它就应该包含业务逻辑。事实上，用户界面所进行的验证和对领域模型的验证时不同的，对于那些粗制滥造的，并且只面向领域的验证行为，我们依然予以限制。<br>如果用户界面使用了领域模型中的对象，那么此时的领域对象仅限于数据的渲染展现。在采用这种方式时，可以使用展现模型对用户界面与领域对象进行解耦。</p>
+<ul>
+<li>六边形架构 </li>
+<li>REST架构</li>
+<li><p>依赖倒置原则</p>
+<p>  有一种方法可以改进分层架构–依赖倒置原则，它通过改变不同层之间的依赖关系达到改进目的。依赖倒置原则正式的定义为：</p>
+<ul>
+<li>高层模块不应该依赖于低层模块，两者都应该依赖于抽象。</li>
+<li>抽象不应该依赖细节，细节应该依赖抽象。</li>
+</ul>
+</li>
+<li><p>REST和DDD<br>  RESTful HTTP是具有诱惑力的，但是我们并不建议将领域模型直接暴露给外界，因为这样会使系统接口变得非常脆弱，原因在于对于领域模型的每次改变都会导致对系统接口的改变。要将DDD与RESTful HTTP合并起来使用，我们有两种方式。<br>  第一种方法是为系统接口层单独创建一个限界上下文，再在此上下文中通过适当的策略来访问实际的核心模型。这是一种经典的方法，它将系统接口看作一个整体没通过资源抽象将系统功能暴露给外界，而不是通过服务或者远程接口。<br>  让我们看一个实际的例子。我们创建一个系统来管理工作组，其中包括任务、计划/预约和子工作组管理等。我们将创建一个纯净的、不受架构影响的领域模型，该模型能正确地反映通用语言，并准确地实现业务逻辑。如果需要为这个领域模型发布一个接口，我们便可以通过REST资源的形式向外提供一个远程接口。这些资源反映了客户所需的用例，他们和领域模型是存在区别的。但是，每一种资源归根结底都创建自核心域，比如核心域中的聚合等。<br>  当然我们也可以简单地使用领域对象来作为JAX-RS的方法参数，比如我们可以将/:user/:task映射到getTask()方法，该方法返回一个task对象。这样看起来是很简单，但却隐藏着一个很大的问题。对Task对象的任何修改都将立即反应到远程接口上，结果有可能使客户端调用失败。而即便我们所做的修改与外界没有任何关系，我们依然不能排除客户端调用失败的可能性。<br>  因此，第一种方法是应该被考虑的，因为它在核心域和系统接口模型之间完成了解耦，这使得我们可以先对领域模型进行修改，然后再决定哪些修改应该反映到系统接口模型上。请注意，在这种方法中，系统接口模型通常是根据领域模型来设计的名单时更好、更自然的方法应该是根据用例来设计。另外，我们还可以为这种方式自定义一种媒体类型。<br>  另一种方法用于需要使用标准媒体类型的时候。如果某种媒体类型并不用于支持单个系统接口么事用于一组相似的客户端-服务器交互场景，此时我们可以创建一个领域模型来处理每一种媒体类型。这样的领域模型甚至可以在服务器和客户端之间进行重用。</p>
+</li>
+<li><p>命令和查询指责分离–CQRS</p>
+</li>
+</ul>
 
       
     </div>
@@ -488,8 +494,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/02/AOP/" rel="next" title="AOP">
-                <i class="fa fa-chevron-left"></i> AOP
+              <a href="/2018/04/05/DDD领域驱动/" rel="next" title="DDD领域驱动">
+                <i class="fa fa-chevron-left"></i> DDD领域驱动
               </a>
             
           </div>
@@ -497,10 +503,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/06/DDD-二/" rel="prev" title="DDD(二)">
-                DDD(二) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -671,7 +673,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DDD领域驱动"><span class="nav-number">1.</span> <span class="nav-text">DDD领域驱动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何DDD"><span class="nav-number">1.1.</span> <span class="nav-text">如何DDD</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DDD-二"><span class="nav-number">1.</span> <span class="nav-text">DDD(二)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#限界上下文不仅仅只是包含模型"><span class="nav-number">1.1.</span> <span class="nav-text">限界上下文不仅仅只是包含模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上下文映射图"><span class="nav-number">1.2.</span> <span class="nav-text">上下文映射图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#架构"><span class="nav-number">1.3.</span> <span class="nav-text">架构</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -884,7 +886,7 @@ var jiathis_config={
       <script type="text/javascript">
       function renderGitment(){
         var gitment = new Gitmint({
-            id: '1522935924000', 
+            id: '1523023279000', 
             owner: 'luyaoze',
             repo: 'gitment-comments',
             
