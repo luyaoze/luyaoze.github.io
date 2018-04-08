@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DDD," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="lyz的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="DDD(三）大多数开发将关注点放在数据源上，而不是领域上。这对DDD新手来说也是如此，因为在软件开发中，数据库依然占据主导地位。我们首先考虑的是数据的属性（对应的数据库的列）和关联关系（外建关联），而不是富有行为的领域概念。这样做的结果是将数据模型直接反应在对象模型上，导致那些表示领域模型的实体包含了大量的getter和setter方法。另外，还存在大量的工具可以帮助我们生成这样的实体模型。虽然在">
+<meta name="keywords" content="DDD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DDD(三）">
+<meta property="og:url" content="http://luyaoze.github.io/2018/04/08/DDD-三）/index.html">
+<meta property="og:site_name" content="lyz的博客">
+<meta property="og:description" content="DDD(三）大多数开发将关注点放在数据源上，而不是领域上。这对DDD新手来说也是如此，因为在软件开发中，数据库依然占据主导地位。我们首先考虑的是数据的属性（对应的数据库的列）和关联关系（外建关联），而不是富有行为的领域概念。这样做的结果是将数据模型直接反应在对象模型上，导致那些表示领域模型的实体包含了大量的getter和setter方法。另外，还存在大量的工具可以帮助我们生成这样的实体模型。虽然在">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-08T16:05:18.908Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DDD(三）">
+<meta name="twitter:description" content="DDD(三）大多数开发将关注点放在数据源上，而不是领域上。这对DDD新手来说也是如此，因为在软件开发中，数据库依然占据主导地位。我们首先考虑的是数据的属性（对应的数据库的列）和关联关系（外建关联），而不是富有行为的领域概念。这样做的结果是将数据模型直接反应在对象模型上，导致那些表示领域模型的实体包含了大量的getter和setter方法。另外，还存在大量的工具可以帮助我们生成这样的实体模型。虽然在">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://luyaoze.github.io/2018/04/08/DDD-三）/"/>
+
+
+
+
+
+  <title>DDD(三） | lyz的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lyz的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">静静地搬砖</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://luyaoze.github.io/2018/04/08/DDD-三）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="卢耀泽">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lyz的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">DDD(三）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T21:07:16+08:00">
+                2018-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/DDD/" itemprop="url" rel="index">
+                    <span itemprop="name">DDD</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/08/DDD-三）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/04/08/DDD-三）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="DDD-三）"><a href="#DDD-三）" class="headerlink" title="DDD(三）"></a>DDD(三）</h1><p>大多数开发将关注点放在数据源上，而不是领域上。这对DDD新手来说也是如此，因为在软件开发中，数据库依然占据主导地位。我们首先考虑的是数据的属性（对应的数据库的列）和关联关系（外建关联），而不是富有行为的领域概念。这样做的结果是将数据模型直接反应在对象模型上，导致那些表示领域模型的实体包含了大量的getter和setter方法。另外，还存在大量的工具可以帮助我们生成这样的实体模型。虽然在实体模型中加入getter和setter并不是什么大错，但是这却不是DDD的做法。</p>
+<h2 id="实体"><a href="#实体" class="headerlink" title="实体"></a>实体</h2><ul>
+<li>用户提供唯一标识<br>  一般我们采用数据库自动生成的机制，例如oracle的序列，mysql的自增</li>
+<li>程序提供标识<br>  比较著名的就是java当中的UUID。</li>
+<li>另一个限界上下文提供唯一标识<br>  例如用户名和密码做唯一索引。</li>
+</ul>
+<p>标识要保证全局唯一性，并且是安全的，不允许修改的，这里就涉及到一个认证的机制，例如我们现在的开发中，根据页面传过来的序列号进行查询，只有通过这个序列号能在数据库当中找到对应的唯一一条数据才允许进行update操作，否则就认为此次修改是无效的。</p>
+<p>举个简单的例子，在身份访问的上下文中：</p>
+<blockquote>
+<pre><code>1.用户（User）存在于某个租户（Tenant）之下，并受该租户控制
+2.必须对该系统中的用户（User）进行认证
+3.User可以处理自己的个人信息，包括名字和联系方式等
+4.User的个人信息可以被其本人和Manage修改
+5.User的安全密码是可以修改的
+</code></pre></blockquote>
+<p>Tenant实体必须有个名字，它的name属性可以是简单的字符串，因为name并没有特殊的行为。Tenant中的name属性有助于查询操作，比如帮助中心的服务人员可以通过name属性来查找出需要服务的Tenant。因此，name属性是必要的，并且Tenant实体的“本质特征”。同时，我们也可以将唯一约束加在name属性上，但这并不是重点。<br>我们还可以向Tenant添加另外的属性，比如售后支持联系人信息、支付人信息等，但是这些都是业务层面的概念，而不是安全层面的。<br>售后支持可以通过另一个限定上下文来管理了。在通过name找到对应的Tenant之后美，系统便可以使用Tenant的唯一标识TenantId了。该TenantId可以进一步用于售后支持上下文中，付账上下文或者客户关系上下文。售后支持联系人，租户地址和租户联系人与安全没有什么关系。另外，将名字name属性加在Tenant上也可以售后支持人员快速地为客户提供服务。<br>在Tenant之后，什么可以做为User实体的唯一标识呢？多数身份系统都为user定义了一个唯一用户宁userName。一个userName由什么组成并不重要，只要它能够在Tenant中唯一地表示一个User即可（相同的userName可以出现在不同的Tenant中）。通常来说，userName由用户自己指定。如果订阅租户对于用户名做出了限制，或者用户名由联合安全机制所决定，那么注册用户需要服从这些限制。所以只需要简单的在userName实体上定义一个userName属性。<br>由于需要满足另一个需求是用户需要提供安全密码，所以向User实体添加一个password属性，由于password绝对不能是明文，所以要对密码进行加密，这就暗示着需要某种形式的领域服务（Domain Service）。所以现在重新对租户和用户定义：</p>
+<blockquote>
+<pre><code>租户：一个有名字的企业订阅方，它提供身份访问与访问服务，同时还包括其他的在线服务。租户向用户发出注册邀请，并处理用户注册过程。
+用户：一个租户下的注册用户，包含有个人名字和联系信息。一个用户拥有唯一的用户名和密码。
+加密服务：对密码或其他敏感信息进行加密
+</code></pre></blockquote>
+<p>还有一个问题就是是否要将username和password合为一个对象，比如名为SecurityPrincipal，这样可以更加清晰地表达安全概念。这是一个有趣的想法。因为很多情况下是根据用户名和密码去查找数据库当中是否有对应的一个记录。但是它忽略了一个重要的需求：密码是可以修改的，另外，有时在查找User的时候，我们并不需要提供密码，如果将这两列做为联合索引，那么每次修改密码将会使数据库索引重排序，所以是没有必要的。</p>
+<h2 id="挖掘实体的关键行为"><a href="#挖掘实体的关键行为" class="headerlink" title="挖掘实体的关键行为"></a>挖掘实体的关键行为</h2><p>在识别出实体的重要属性之后，我们开始挖掘实体的行为。。。。。<br>当我们思考激活（Activate）或者禁用（Deactivate）一个Tenant时，我们想的可能是一个布尔开关，至于如何实现这个开关在这里并不重要。如果我们将一个activate属性添加在Tenant类图中，别人在看到这张类图时，他能够指导activate表达的是什么意思吗？例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tenant</span></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> active;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的active恐怕并不能够完全表达出它的意图。在开始的时候，我们将关注点放在对身份和查询有用的属性上，之后我们希望通过相似的方法加入一些服务相关的信息。<br>其实更好的办法就是用一个意图展现接口，它更符合领域的设计。例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Teanant</span></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">activate</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//TODO 实现</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> deactivate&#123;</span><br><span class="line">        <span class="comment">//TODO 实现</span></span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>简单一点说就是给相应的领域对象添加行为。相应的我们前面的对于Tenant的定义也需要增加了：</p>
+<blockquote>
+<pre><code>激活租户：通过该操作激活一个租户，激活后再对租户的当前状态进行确认。
+禁用租户：通过该操作禁用一个租户，在禁用租户时，用户可能还没有被认证。
+认证服务：协调对用户的认证过程，首先需要保证他们所属的租户处于激活状态。
+</code></pre></blockquote>
+<p>领域模型是慢慢迭代的，要想一次建好领域模型是不存在的。在这次迭代过程中我们发现了另一个领域服务。在对User实例进行匹配之前，我们需要调用Tenant的isActivate()方法来检查租户的活跃状态，我们也可以通过一下需求看出该认证服务的必要性：</p>
+<ul>
+<li>系统必须对User进行认证，并且只有当Tenant处于激活状态时才能对User进行认证</li>
+</ul>
+<p>可以看出，提供User的username和password信息只是认证用户的其中一个步骤，因此我们需要更高层面的认证协调者。领域服务便能很好地完成这样的任务。我们可以在后面再加入额外的细节。<br>同时考虑一下需求：</p>
+<ul>
+<li>通过邀请，租户允许用户进行注册</li>
+</ul>
+<p>当我们仔细分析这项需求时，我们发现该需求比先前想象的要复杂。这里似乎需要一个注入Invitation的对象，但是需求并没有提供足够的信息，管理邀请的行为也不清晰，因此等到又了更多的输入信息时才继续。然而我们需要创建registerUser()方法。<br>先前对于User的理解：</p>
+<blockquote>
+<pre><code>User处理自己的信息，包括名字和联系方式
+User个人的信息可以被其本人和Manager修改
+User的安全密码时可以被修改的
+</code></pre></blockquote>
+<p>这里我们使用两种经常联合使用的安全模式–用户和基本身份。很明显，“个人”的概念伴随着“User”的概念。基于以上对于User的理解，我们需要创建一个Person类，以免将过多的指责放在User类上。上面的“个人的”一词定义如下：</p>
+<ul>
+<li>个人：包含并管理用户的个人信息，包括名字和联系方式等。</li>
+</ul>
+<p>这里的Person时实体还是值对象呢？同样，“修改”一词时关键。我们似乎没有必要要在一个用户修改电话号码时就将整个Person对象替换掉，因此我们将其建模成了实体，暂时，这个Person包含了两个值对象–ContactInfomation和Name，这些都是比较模糊的概念，之后在必要的时候将其进行重构。<br>这里还需要思考一下如何管理用户的名字和联系信息呢。客户端访问到User中的Person对象吗？这里的一个User是否总是一个Person呢？如果User表示的是一个外部的系统，又该怎么办呢？如果我们允许客户访问Person，那么客户端的代码可能需要进行重构了。<br>反之，如果将Person的行为直接放在User上，这可能会避免一些麻烦。是完全地讲Person暴露给外界呢？还是应该向客户隐藏起来？权衡一下，我们设计一个Principal（委托人）接口，而Person和System分别是两种特殊的Principal。<br>考虑最后一条需求所反映的通用语言：</p>
+<ul>
+<li>user的安全密码是可以修改的</li>
+</ul>
+<p>所以User应该拥有一个changePassword（）方法。客户是绝对不能访问到密码的，哪怕是加密之后的密码也不行。在设置了密码之后，该密码是不会暴露在聚合边界之外的。所有需要和安全认证打交道的代码都必须通过AuthenticationService。</p>
+<h2 id="角色和职责"><a href="#角色和职责" class="headerlink" title="角色和职责"></a>角色和职责</h2><p>建模的一个方面便是发现对象的角色和职责。通常来说，对角色和职责分析是可以应用在领域对象上的。这里我们特别关注的是实体的角色和职责。<br>对于“角色”这个概念，我们需要一些上下文来理解。在身份与访问上下文中，一个角色是一个实体，同时是身份安全领域中的一个聚合根。也就是模型中的对象可以扮演什么样的角色。</p>
+<ul>
+<li><p>领域对象扮演多种角色</p>
+<p>  在面向对象编程中，通常由接口定义来定义实现类的角色。在正确设计的情况下，一个类对于每一个实现它所实现的接口来说，都存在一种角色。如果一个类没有显示的角色–即该类没有实现任何形式的接口，那么在默认情况下它扮演的即是本类的角色。也即，该类的公有方法表示该类的隐式接口。比如，上面的User类并没有实现任何接口，但是它依然扮演了一种角色，即User角色。<br>  我们可以使一个对象同时扮演User和person的角色，虽然这并不是我所建议的，但就目前而言，让我们假设这时一个好主意。这样一来，我们便没有必要在User中引用一个Person<br>了，而是只需要创建一个对象来同时扮演这两种角色即可。<br>  那我们为什么要这么做呢？通常是因为两个或多个对象既有相似之处，又有不同之处。此时，这些对象上重叠的属性可以通过一个实现了多个接口的对象来表示。比如，我们可以创建一个HumanUser对象，该对象既是一个User，又是一个Person。</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Person</span></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HumanUser</span> <span class="keyword">implements</span> <span class="title">User</span>, <span class="title">Person</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上代码看似合情合理，但是它也可能使事情变得复杂。如果两个接口都是复杂的，那么HumanUser对象实现起来将是困难的，另外，如果User不是一个人，而是一个系统又该怎么办？此时我们可能需要3个接口，而要设计一个实现3个接口的对象将变得更加困难。<br>以上的设计存在多个问题，其中之一便是对象分裂症。对象分裂症的描述是：委派对象根本不知道原来被委派独享的身份标识，因此我们无法知道委派对象的真正身份。<br>当然，角色接口最实用之处也是其最简单之处。通过接口，我们可以将实现细节隐藏起来，从而不至于将实现细节泄漏到客户端中。我们所设计的接口应该刚好能够满足客户端的需求，不多也不少。实现类可以比复杂接口复杂多，它可以拥有大量的支撑性属性，外加这些属性的getter和setter方法。但是客户端是看不到这些细节的。比如，有些工具或框架可能强制性地要求在类上创建共有方法，而我们并不希望客户端调用这些公有的方法。即便如此，领域模型接口也不会被技术上的实现细节所影响。显然，这时一个领域建模方面的好处。<br>不管采用哪种设计方式，我们都应该确保领域语言优于技术实现。在DDD中，业务领域的模型才是最重要的。</p>
+<ul>
+<li>创建实体</li>
+</ul>
+<p>当我们创建一个实体时，我们希望通过构造函数来初始化足够多的实体状态，这一方面有助于表明该实体的身份，另一方面可以帮助客户端更容易地查找该实体。在使用及早生成唯一标识的策略时，构造函数至少需要接受一个唯一标识做为参数。但是根据我们现在的业务需要，每次都是根据实体类的主键去数据库中查询，所以这个根据自己具体的业务来对待吧，没有最好的方案，只有最合适的方案。</p>
+<h2 id="值对象"><a href="#值对象" class="headerlink" title="值对象"></a>值对象</h2><p>值对象虽然经常被掩盖在实体的阴影之下，但它确实非常重要的DDD部件。其实我们现在业务系统当中使用的所有的用@Entity标注的对象都是值对象。因为必须显示地调用DAO层的save（）方法才能对值对象进行保存或者修改。如果借助EntityManger这个类托管的对象，你只要调用它的setter方法之后，Hibernate会自动执行一条update的sql语句对该对象进行更新。用值对象来建模，好处就是非常容易地对值对象进行创建、测试、使用、优化和维护，并不需要担心修改了某一个属性就修改了数据库。而且值对象拥有可替换行，整体性，无副作用等特点。</p>
+<p>未完待续～～～</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/weixin.jpg" alt="卢耀泽 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/zhifubao.jpg" alt="卢耀泽 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/lyz.jpg" alt="卢耀泽 公众号"/>
+        <p>公众号</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DDD/" rel="tag"><i class="fa fa-tag"></i> DDD</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/06/DDD-二/" rel="next" title="DDD(二)">
+                <i class="fa fa-chevron-left"></i> DDD(二)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">卢耀泽</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DDD-三）"><span class="nav-number">1.</span> <span class="nav-text">DDD(三）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实体"><span class="nav-number">1.1.</span> <span class="nav-text">实体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挖掘实体的关键行为"><span class="nav-number">1.2.</span> <span class="nav-text">挖掘实体的关键行为</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#角色和职责"><span class="nav-number">1.3.</span> <span class="nav-text">角色和职责</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#值对象"><span class="nav-number">1.4.</span> <span class="nav-text">值对象</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">卢耀泽</span>
+
+  
+</div>
+
+
+  <div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+  <!-- <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div> -->
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: '1523192836000', 
+            owner: 'luyaoze',
+            repo: 'gitment-comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '6ffe72603c327d768076ed7de9eb93f47b736abf',
+            
+                client_id: 'f2ca7c1e6b757189490c'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  <!--卖萌-->
+<script type="text/javascript" src="/js/src/dytitle.js"></script>
+</body>
+</html>
